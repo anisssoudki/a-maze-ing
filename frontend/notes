@@ -1,1 +1,35 @@
 Rails-js project
+
+modules: player, maze, ball, goal 
+
+maze module concers : 
+1- how to generate the maze
+2-how to draw on the screen
+3-key mapping of ball or controlled object
+4-detecting the collision between ball and goal
+5- we need an algorithm to generate the maze 
+6- idea of recursion comes into play 
+7-i'm probably going to use matter.js (a library for js )
+8- matter.js has the ability to map key presses to movements of shapes 
+9- matter.js has the ability to detect collisions between different shapes
+10- link for matter.js documentation https://brm.io/matter-js/
+11- matter.js github https://github.com/liabru/matter-js#install we can use npm install or use a cdn to link this library
+12- link for cdn https://www.cdnpkg.com/matter-js
+script should have this in it inside of index.html
+	https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.14.2/matter.min.js
+
+matter js terminology to be aware of: 
+
+World => object that contains all of the different "objects" in the matter app 
+
+engine => reads the current state of the world object, then calculate changes in positions of all the different shapes 
+
+runner => gets the engine and world to work together, runs 60 frames per second (games usually run in an infinte loop think about this as an infinte loop using regular javascript)
+
+render => does what it means it renders things on the screen 
+body => A shape we are displaying can be a circle rect or whatever matter offers us 
+
+
+
+this is one of the source codes of one of the example matter.js library gives us https://github.com/liabru/matter-js/blob/master/examples/mixed.js we are able to see how it works we use Matter.(keyword) where key word can be engine render runner ect... 
+in our code we are going to use destructuring to make things simpler the code in the link is written with var a while back but we are gonna use const because its a better way of declaring variables
