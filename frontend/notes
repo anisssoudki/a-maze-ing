@@ -33,3 +33,5 @@ body => A shape we are displaying can be a circle rect or whatever matter offers
 
 this is one of the source codes of one of the example matter.js library gives us https://github.com/liabru/matter-js/blob/master/examples/mixed.js we are able to see how it works we use Matter.(keyword) where key word can be engine render runner ect... 
 in our code we are going to use destructuring to make things simpler the code in the link is written with var a while back but we are gonna use const because its a better way of declaring variables
+
+so far we have one shape on the screen if we look at the world variable in the console we can see a lot of properties that matter.js gives us stuff like position or speed
