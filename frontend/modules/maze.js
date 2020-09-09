@@ -1,4 +1,4 @@
-const { Engine, Render, Runner, World, Bodies} = Matter;
+
 
 class Maze {
 constructor(id, difficulty)

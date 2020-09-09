@@ -25,8 +25,8 @@ function setup() {
     Render.run(render);
     Runner.run(Runner.create(), engine);
 
-    function shape(x,y,width,height,gravity) {
-        return Bodies.rectangle(x, y, width, height, gravity);
+    function shape(x,y,width,height,options) {
+        return Bodies.rectangle(x, y, width, height, options);
     } 
 
     // console.log(shape)
@@ -36,10 +36,10 @@ function setup() {
 
     const walls = 
     [
-    shape(400, 0, 800, 40, {isStatic: true}),
-    shape(0, 400, 40, 800, {isStatic: true}),
-    shape(400, 600, 800, 40, {isStatic: true}),
-    shape(800, 300, 40, 800, {isStatic: true})
+    shape(400, 0, 800, 40, {isStatic: true, render:{fillStyle:"purple"}}),
+    shape(0, 400, 40, 800, {isStatic: true, render:{fillStyle:"purple"}}),
+    shape(400, 600, 800, 40, {isStatic: true, render:{fillStyle:"purple"}}),
+    shape(800, 300, 40, 800, {isStatic: true, render:{fillStyle:"purple"}})
     ]
 
     World.add(world, walls);
