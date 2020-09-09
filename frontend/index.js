@@ -34,8 +34,11 @@ World.add(world, shape)
 
 const walls = 
 [
-shape(200, 100, 20, 20, {isStatic: true}),
-shape(100, 200, 20, 20, {isStatic: true})
+shape(400, 0, 800, 40, {isStatic: true}),
+shape(0, 400, 40, 800, {isStatic: true}),
+shape(400, 600, 800, 40, {isStatic: true}),
+shape(800, 300, 40, 800, {isStatic: true}),
+shape(150, 150, 40, 40, {isStatic: false})
 ]
 World.add(world, walls)
 console.log(world)
