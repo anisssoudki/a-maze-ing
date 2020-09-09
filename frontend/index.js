@@ -2,6 +2,8 @@
 // destructuring variables from the library/ see notes line 34
 // im just litteraly using an example giving by the library
 // https://github.com/liabru/matter-js/blob/master/examples/mixed.js
+function setup() {
+
 const { Engine, Render, Runner, World, Bodies} = Matter;
 
 // when we create the engine we get a world object along with it
@@ -21,9 +23,24 @@ const render = Render.create({
 Render.run(render);
 Runner.run(Runner.create(), engine);
 
-const shape = Bodies.rectangle(200, 200, 50, 50, {
-    isStatic: true
-});
+function shape(x,y,width,height,gravity) {
+    return Bodies.rectangle(x, y, width, height, gravity);
+} 
+
 // console.log(shape)
 World.add(world, shape)
-// console.log(world) => we can see all the shapes we created in the console 
+// console.log(world)
+//  => we can see all the shapes we created in the console 
+
+const walls = 
+[
+shape(200, 100, 20, 20, {isStatic: true}),
+shape(100, 200, 20, 20, {isStatic: true})
+]
+World.add(world, walls)
+console.log(world)
+}
+
+document.addEventListener("DOMContentLoaded", event => {
+setup()
+});
