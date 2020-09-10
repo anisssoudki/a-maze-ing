@@ -4,7 +4,7 @@ class Player
 
         constructor(data)
             {
-                this.id = data.id;
+               
                 this.name = data.name;
                 this.save();
             }
@@ -46,7 +46,7 @@ class Player
                         
                             playerarr.forEach(function(obj)
                             {
-                                console.log(obj)
+                                // console.log(obj)
                             
                             let player = new Player(obj)
                             
@@ -67,15 +67,27 @@ class Player
                      Player.all.forEach(function(element)
                                             {
                                                 let h2 = document.createElement("h2") 
-                                                h2.innerText = `ID:${element.id} Player:${element.name}`
+                                                h2.innerText = `Player:${element.name}`
                                                 div.appendChild(h2) 
                                             }
                                         )
                 }
 
-                static createPlayers(name) 
+                static playerObjCreation(event)
+                {
+                    event.preventDefault() 
+                    const form = event.target.elements 
+                    const playerName = form.playerName.value
+                    const PlayerObj =  Player.findPlayer(playerName)
+                    const configBodyObj = {}
+                    configBodyObj.player = PlayerObj
+                    createPlayer(configBodyObj)
+                }
+
+            
+                static createPlayer(name) 
                 {
                     return fetch(this.baseUrl() + `players`, this.fetchConfig("POST", {name}))
-                    .then(res => res.json());
+                    .then(res => res.json().then(Player.fetchPlayer()));
                 }
     }
