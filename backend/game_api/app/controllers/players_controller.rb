@@ -2,8 +2,8 @@ class PlayersController < ApplicationController
     before_action :set_player, only: [:show, :edit, :update, :destroy]
 
     def index 
-       @player = Player.all
-       render json: @player 
+       @players = Player.all
+       render json: @players
     end
 
 

@@ -55,7 +55,7 @@ class Player
                             
                     )
                     
-                    this.renderPlayers()     
+                    // this.renderPlayers()     
                     }) 
                 
                     
@@ -64,7 +64,7 @@ class Player
                 {
                   
                     
-                    let div = document.createElement("div")
+                   let div = document.createElement("div")
                    document.body.appendChild(div)
 
                    
@@ -90,9 +90,9 @@ class Player
                 //     createPlayer(configBodyObj)
                 // }
 
-                static findPlayer(playerName) 
+                static findPlayer(attr, attrVal) 
                   {
-                    return (this.all.find(obj => {return obj.title === playerName}))
+                    return (this.all.find(obj => {return obj[attr] === attrVal}))
                   }
 
 
@@ -111,4 +111,7 @@ class Player
                     return fetch(this.baseUrl() + `players`, this.fetchConfig("POST", {name}))
                     .then(res => res.json().then(this.renderPlayers()));
                 }
+
+                static UpdatePlayer(){}
+                static DeletePlayerAndAllMazeRecords(){}
     }

@@ -84,11 +84,44 @@ function renderForm() {
                     {
                           if (player.name.toLowerCase() === input.toLowerCase())
                         signInDiv.innerHTML = `<div class="signOutBanner">welcome back ${player.name}<button id="signout">signout</button></div>
-                        <div id="userDiv" data-id="${player.id}"></div>`
-                  
+                        <div id="${player.name}">${player.id}</div>
+                        `
+                        
                     }
+                 
+                    console.log(input)  
+                   
+                    let ShowMazeReocrds = document.createElement('button')
+                    let userdivselector = document.getElementById(`${input.toLowerCase()}`) 
+                    let UserId = userdivselector.innerHTML
+                    let difficultyForm = document.createElement('div') 
+                    difficultyForm.innerHTML = `<form>
+                    <input list="level" name="level"> enter num between 5 and 20 for Maze difficulty level
+                    <input type="submit">
+                  </form>`
+
+                   difficultyForm.setAttribute("id",`${UserId}`)
+                    ShowMazeReocrds.setAttribute("id", `${UserId}`)
+                 
+                    ShowMazeReocrds.innerText = "show Maze Scores"
+                   
+                   
+                    document.body.appendChild(ShowMazeReocrds)
+                    document.body.appendChild(difficultyForm)
+                   
+                    difficultyForm.addEventListener('submit', event => {Maze.getBodyObject(event)})
+                    
+                    ShowMazeReocrds.addEventListener('click', event => {
+                      event.preventDefault()
+                    Maze.fetchMazeRecordForPlayer(UserId)
+                    
+                    })
                 }
+                
               )
+             
+             
+            
            }
   })
   

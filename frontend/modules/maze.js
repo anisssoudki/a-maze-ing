@@ -6,7 +6,7 @@ class Maze {
 
     constructor(data)
         {
-            this.id = data.id, 
+           
             this.difficulty = data.difficulty;
             this.time = data.time 
             this.player_id = data.player_id
@@ -19,6 +19,135 @@ class Maze {
             Maze.all.push(this);
             
         }
+    
+        static baseUrl() 
+        {
+            return `http://localhost:3000/`;
+        }
+        
+        static getHeaders()
+        {
+            return  {
+                        "Content-Type": "application/json",
+                        "Accept": "application/json",
+                    }
+        }
+        
+        static fetchConfig(verb, bodyObject) 
+        {
+            return {
+                        method: verb,
+                        headers: this.getHeaders(),
+                        body: JSON.stringify(bodyObject)
+                    }
+        }
+
+
+     
+        static renderRecordOfGamesForPlayer(input,output) 
+        {
+        
+        }
+
+        static fetchMazeRecordForPlayer(player_id) 
+        {
+            let div = document.createElement("div")
+            document.body.appendChild(div)
+            fetch(Maze.baseUrl()+`players/${player_id}/mazes`)
+            .then(resp => resp.json())
+            .then(data => 
+                data.forEach(function(obj)
+                {console.log(obj)
+                    
+                     
+                        let h2 = document.createElement("h2") 
+                        h2.textContent  = `${obj.player.name} Maze record: Maze id:${obj.id}, difficulty:${obj.difficulty}, time:${obj.time}, player id :${obj.player_id} `
+                        div.appendChild(h2) 
+                        
+              }
+              ))}
+
+              static getBodyObject(event)
+              {
+                 event.preventDefault()
+                 console.log(event)
+                 const  level = event.target[0].value
+                 event.target.id = event.target.parentElement.id
+                 let difficultyForm =   event.target.id
+    // we need to code out the maze than make sure we pass in the correct parameters to generate it
+                    let mazePlayerId = parseInt(difficultyForm, 10)
+                   let mazeDifficultyLevel = parseInt(level, 10)
+                   console.log(mazeDifficultyLevel)
+                   const bodyObject = {}
+                   bodyObject.difficulty = mazeDifficultyLevel
+                   bodyObject.time = 60
+                   bodyObject.player_id = mazePlayerId
+                   
+                    // Maze.getBodyObject(event)
+                    // ==> // Player.PlayGameAndSaveRecord(difficulty,time,userid)
+                   
+                  
+                  
+                  //  wipe   Maze.fetchMazeRecordForPlayer(UserId)
+                  // and redisplay button 
+                  
+                 
+              
+                  event.target.remove()
+
+               
+               
+                
+                Maze.PlayGameAndSaveRecord(bodyObject)
+              }
+
+
+              static PlayGameAndSaveRecord(bodyObject) 
+              {
+              let  maze = new Maze(bodyObject)
+                fetch(Maze.baseUrl()+`players/${bodyObject.player_id}/mazes`,  this.fetchConfig('POST', bodyObject))
+                .then(res => res.json())
+                .then(data =>{console.log(data)
+                   
+                })
+                   
+                    
+                
+               
+
+              }
+          
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
                 startgame() 
                 {
