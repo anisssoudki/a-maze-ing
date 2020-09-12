@@ -103,7 +103,7 @@ class Player
 
                   static getPlayer(playerId) 
                   {
-                    return fetch(this.baseUrl() + `users/${playerId}`).then(res => res.json());
+                    return fetch(this.baseUrl() + `players/${playerId}`);
                   }
 
                 static createPlayer(name) 
@@ -112,6 +112,22 @@ class Player
                     .then(res => res.json().then(this.renderPlayers()));
                 }
 
-                static UpdatePlayer(){}
-                static DeletePlayerAndAllMazeRecords(){}
+                static updatePlayer(){}
+
+                static deletePlayerAndAllMazeRecords(playerId,element)
+                {
+                    debugger
+                    console.log(this.baseUrl() + `players/${playerId}`)
+                    fetch(this.baseUrl() + `players/${playerId}`,{
+                        method: 'DELETE', 
+                        headers: { 
+                            'Content-type': 'application/json'
+                        } 
+                    })
+                    
+                    
+                    .then(res => res.json())
+                   .then(result => console.log(result))
+                    
+                 }
     }

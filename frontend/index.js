@@ -4,11 +4,15 @@
 // https://github.com/liabru/matter-js/blob/master/examples/mixed.js
 
 
-document.addEventListener("DOMContentLoaded", event => {
-  renderForm()
-Player.fetchPlayer()
-// maze = new Maze(5,10)
 
+
+document.addEventListener("DOMContentLoaded", event => {
+
+  
+
+renderForm()
+
+Player.fetchPlayer()
 });
 
 function renderForm() {
@@ -44,7 +48,7 @@ function renderForm() {
         <input name="name" type="text" placeholder="PlayerName">
         <button id="signInBtn" type="submit">Submit</button>
       </form>`;
-      
+  
     });
   
     signUpButton.addEventListener('click', event => {
@@ -110,12 +114,28 @@ function renderForm() {
                     document.body.appendChild(difficultyForm)
                    
                     difficultyForm.addEventListener('submit', event => {Maze.getBodyObject(event)})
-                    
+                   
                     ShowMazeReocrds.addEventListener('click', event => {
                       event.preventDefault()
                     Maze.fetchMazeRecordForPlayer(UserId)
-                    
+                 
                     })
+                    
+                  let playerDeleteDiv = document.createElement('div')
+                  document.body.appendChild(playerDeleteDiv)
+                playerDeleteDiv.innerHTML = `<form method="DELETE">
+                <button type="button" class="deletebtn">Delete</button>
+                </form>`
+                playerDeleteDiv.addEventListener('click', event => {
+                  event.preventDefault()
+                  parsedUserId = parseInt(UserId, 10)
+                  console.log(parsedUserId)
+                  console.log(input)
+                  console.log(signInDiv)
+                  console.log(event)
+                  Player.deletePlayerAndAllMazeRecords(parsedUserId, signInDiv)
+                  renderForm()
+                })
                 }
                 
               )

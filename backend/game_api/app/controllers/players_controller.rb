@@ -21,7 +21,11 @@ class PlayersController < ApplicationController
         end
     end
 
-
+    def destroy 
+        byebug
+        @player.destroy!
+    #    use find by and if it return nil send success Player.find_by(id: @player.id) if not 
+    end
 
     private 
 

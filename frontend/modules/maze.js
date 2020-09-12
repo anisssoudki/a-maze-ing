@@ -10,7 +10,7 @@ class Maze {
             this.difficulty = data.difficulty;
             this.time = data.time 
             this.player_id = data.player_id
-            this.startgame()
+            this.startgame(data.difficulty)
             this.save()
         }
 
@@ -77,9 +77,10 @@ class Maze {
     // we need to code out the maze than make sure we pass in the correct parameters to generate it
                     let mazePlayerId = parseInt(difficultyForm, 10)
                    let mazeDifficultyLevel = parseInt(level, 10)
+                   
                    console.log(mazeDifficultyLevel)
                    const bodyObject = {}
-                   bodyObject.difficulty = mazeDifficultyLevel
+                   bodyObject.difficulty = mazeDifficultyLevel || 5
                    bodyObject.time = 60
                    bodyObject.player_id = mazePlayerId
                    
@@ -147,10 +148,16 @@ class Maze {
 
 
 
-
-
-                startgame() 
+ 
+// probably gonna have several arguments in this instance method like ball target maze difficulty time 
+// than make the class create an instance everytime new is called everythng start from here
+                startgame(difficulty) 
                 {
+                    document.body.style.backgroundImage = "url('images/mc-giphy.gif')";
+                    
+                    audio.currentTime = 16
+                    audio.play()
+                    document.body.appendChild(playbtn)
                     
 
                         const { Engine, Render, Runner, World, Bodies, MouseConstraint, Mouse} = Matter;
@@ -196,10 +203,14 @@ class Maze {
                             mouse: Mouse.create(render.canvas)
                         }))
                     
-                        for (let i=0; i < 20; i++){
+                        for (let i=0; i < difficulty; i++){
                         World.add(world, shape(Math.random()*width, Math.random()*height, 40, 40, {isStatic: false})) 
                         }
                     
+
+
+                        const canvas = document.querySelector('canvas')
+                    canvas.style.backgroundColor = "transparent"
                 }
         
                 

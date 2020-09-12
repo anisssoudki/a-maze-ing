@@ -21,6 +21,8 @@ class MazesController < ApplicationController
     end
 
 
+    
+
     private 
 
     def maze_params

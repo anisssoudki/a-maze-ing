@@ -1,16 +1,11 @@
-function dropDownFunction() {
-    document.getElementById("myDropdown").classList.toggle("show");
-  }
+var audio = document.getElementById("mc_hammer")
+let mcHammer = audio.childNodes[1].src
 
-  window.onclick = function(event) {
-    if (!event.target.matches('.dropbtn')) {
-      var dropdowns = document.getElementsByClassName("dropdown-content");
-      var i;
-      for (i = 0; i < dropdowns.length; i++) {
-        var openDropdown = dropdowns[i];
-        if (openDropdown.classList.contains('show')) {
-          openDropdown.classList.remove('show');
-        }
-      }
-    }
-  }
+let playbtn = document.createElement("button")
+playbtn.innerText="I cant touch this but i can pause it"
+
+
+playbtn.addEventListener("click", event => {
+
+ audio.pause()
+})
