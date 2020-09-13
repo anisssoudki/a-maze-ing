@@ -1,15 +1,20 @@
 body {
-  background-image: url("images/mazebackgroundpic.jpg");
+
   background-repeat: no-repeat;
   background-blend-mode: lighten;
   background-size: cover;
+}
+h1 {
+
+color :yellow;
 }
 
 div {
   
   color:#444;
   border:0px solid #CCC;
-  background:#DDD;
+  background: transparent;
+  color: white;
   box-shadow: 0 0 5px -1px rgba(0,0,0,0.2);
   cursor:pointer;
   vertical-align:middle;
@@ -17,16 +22,26 @@ div {
  
   text-align: center;
 }
+form {
+  display: block;
+  width: 100%;
+  border: none;
+  color: green;
+  background-color:black;
+  padding: 14px 28px;
+  font-size: 16px;
+  cursor: pointer;
+  text-align: center;
+}
 button {
-  display:inline-block;
-  color:#444;
-  border:0px solid #CCC;
-  background: azure;
-  box-shadow: 0 0 5px -1px rgba(0,0,0,0.2);
-  cursor:pointer;
-  vertical-align:middle;
-  max-width: 350px;
- 
+  display: block;
+  width: 100%;
+  border: none;
+  color: green;
+  background-color:black;
+  padding: 14px 28px;
+  font-size: 16px;
+  cursor: pointer;
   text-align: center;
 }
 

@@ -153,11 +153,15 @@ class Maze {
 // than make the class create an instance everytime new is called everythng start from here
                 startgame(difficulty) 
                 {
-                    document.body.style.backgroundImage = "url('images/mc-giphy.gif')";
                     
-                    audio.currentTime = 16
-                    audio.play()
-                    document.body.appendChild(playbtn)
+                    if (difficulty > 15){
+                        audio2.play()
+                    } 
+                    else {
+                        audio1.play()
+                    }
+                    
+                    document.body.appendChild(pauseBtn)
                     
 
                         const { Engine, Render, Runner, World, Bodies, MouseConstraint, Mouse} = Matter;

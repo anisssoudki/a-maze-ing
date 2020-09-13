@@ -22,9 +22,11 @@ class PlayersController < ApplicationController
     end
 
     def destroy 
-        byebug
-        @player.destroy!
-    #    use find by and if it return nil send success Player.find_by(id: @player.id) if not 
+        
+        @player.destroy
+      if @player.valid? 
+        render json: { errors: @player.errors.full_messages }
+      end
     end
 
     private 

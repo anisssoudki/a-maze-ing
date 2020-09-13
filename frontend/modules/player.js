@@ -116,18 +116,15 @@ class Player
 
                 static deletePlayerAndAllMazeRecords(playerId,element)
                 {
-                    debugger
-                    console.log(this.baseUrl() + `players/${playerId}`)
-                    fetch(this.baseUrl() + `players/${playerId}`,{
+                    fetch(this.baseUrl() + `players/${playerId}`,
+                    {
                         method: 'DELETE', 
                         headers: { 
-                            'Content-type': 'application/json'
-                        } 
+                                     'Content-type': 'application/json'
+                                 } 
                     })
+                    .then(res =>window.alert(`${res.statusText} player with id ${playerId} is deleted`))
                     
-                    
-                    .then(res => res.json())
-                   .then(result => console.log(result))
-                    
+                    .catch(error =>window.alert(error))  
                  }
     }
