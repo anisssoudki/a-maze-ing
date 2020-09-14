@@ -46,4 +46,9 @@ class Timer {
       let selectTimer = document.getElementById('duration')
        return parseInt(selectTimer.value, 10)
     }
+    createSvg = () => 
+    {
+      let TimerDrawingElement = document.createElement('SVG')
+      document.body.appendChild(TimerDrawingElement)
+    }
 }
