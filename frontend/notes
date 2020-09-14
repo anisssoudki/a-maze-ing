@@ -68,3 +68,22 @@ at the start the circle border is filled and dasharray is gonna equal to perimet
 and dashoffset will be 0 note dash offset removes the border clockwise and counterclockise depending on negative or positve value 
 at the end we should have dasharray = perimeter and dashoffset = -1*perimeter 
 because we are erasing or we can do 1*permiter to make the circle erase the other way arround. this is the last thng i have to implement than move on to building the maze
+
+--------------------------grid generation notes-------------------
+to generate a 2d array we can do 2 for loops inside of each other 
+and push the second loop to the first array loop 
+grid = [];
+for (let i=0; i<3;i++ ){
+	grid.push([]); we are pushing empty array to 0,1,2 indexes
+	for(let j=0;j<3;j++){
+ }
+}
+another way is to do this 
+const grid = Array(3).fill(null).map(() => Array(3).fill(false))
+saying make 3 arrays: 
+[null,null,null]
+[null,null,null]
+[null,null,null]
+than.map will map the false values to the null values in the array 
+there is a grid generation schema in theimages file hope it would make more sense if anyone is confused here 
+
