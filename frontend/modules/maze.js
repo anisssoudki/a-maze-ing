@@ -77,13 +77,15 @@ class Maze {
     // we need to code out the maze than make sure we pass in the correct parameters to generate it
                     let mazePlayerId = parseInt(difficultyForm, 10)
                    let mazeDifficultyLevel = parseInt(level, 10)
+                   let timer = new Timer(mazeDifficultyLevel*4)
                    
                    console.log(mazeDifficultyLevel)
                    const bodyObject = {}
-                   bodyObject.difficulty = mazeDifficultyLevel || 5
-                   bodyObject.time = 60
-                   bodyObject.player_id = mazePlayerId
                    
+                   bodyObject.difficulty = mazeDifficultyLevel || 5
+                   bodyObject.time = timer.duration
+                   bodyObject.player_id = mazePlayerId
+                   console.log(bodyObject)
                     // Maze.getBodyObject(event)
                     // ==> // Player.PlayGameAndSaveRecord(difficulty,time,userid)
                    
