@@ -102,4 +102,19 @@ we would have this v = [[value,value],
 						[value,value,value],
 						[value,value,value]
 					 	]  
-						 
+
+after this and starting at a random point 
+ const stepThroughCell = (row,column) => {
+                         this is where the algorithm steps falls in:
+1. if i have visited the cell at [row,column],then return 
+2. mark this cell as being visited using grid array (update false to true)
+3.assemble randomly-ordered list of neighbors 
+4.for each neighbor... {
+	1. check to see if that neighbors is out of bounds
+	in order to prevent visiting a cell that doesnt exist 
+	2.if we have visited that neighbor continue to next neighbor
+	3.remove a wall from either horizonals or verticals 
+	4. visit that next cell 
+} 
+
+                        }

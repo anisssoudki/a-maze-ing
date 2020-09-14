@@ -24,6 +24,7 @@ function wipeDom() {
   document.body.innerHTML=` <svg id="svg" height="100" width="200">
     </svg>`
     renderForm()
+    listeners()
 }
 
     

@@ -49,7 +49,7 @@ function renderForm() {
 function listeners() {    
   signInDiv.addEventListener('submit', event => {
       event.preventDefault()
-      let input = event.target.name.value
+      let input = event.target.name.value.toLowerCase()
       let eventId = event.target.id 
       // console.log(eventId)
       // console.log(input)
@@ -81,6 +81,7 @@ function listeners() {
                 let ShowMazeReocrds = document.createElement('button')
                 let userdivselector = document.getElementById(`${input.toLowerCase()}`) 
                 let UserId = userdivselector.innerHTML
+                if (UserId === null) {window.alert("you must sign up")}
                 let difficultyForm = document.createElement('div') 
                 difficultyForm.innerHTML = `<form>
                 <input list="level" name="level"> enter num between 5 and 20 for Maze difficulty level
@@ -132,7 +133,7 @@ function listeners() {
       
       else {
             // we are gonna find the player 
-            Player.getPlayers(input)
+            Player.getPlayers(input.toLowerCase())
             .then(players =>
                {         
                   for (player of players) 
@@ -148,7 +149,9 @@ function listeners() {
                    
                     let ShowMazeReocrds = document.createElement('button')
                     let userdivselector = document.getElementById(`${input.toLowerCase()}`) 
+                    if (userdivselector === null) {window.alert("Playername doesnt exist You must signup with that name first")}
                     let UserId = userdivselector.innerHTML
+                   
                     let difficultyForm = document.createElement('div') 
                     difficultyForm.innerHTML = `<form>
                     <input list="level" name="level"> enter num between 5 and 20 for Maze difficulty level

@@ -258,7 +258,13 @@ class Maze {
                         // maze starting cell - this is going to be random
                         const startRow = Math.floor(Math.random()*cells);
                         const startColumn = Math.floor(Math.random()*cells)
-                        
+                        // see notes line 107 for the method below
+                        const stepThroughCell = (row,column) => {
+                            if (grid[row][column] === true){return;}
+                            grid[row][column] = true; 
+                        }
+                        stepThroughCell(startRow,startColumn)
+                        console.log(grid)
                         const canvas = document.querySelector('canvas')
                     canvas.style.backgroundColor = "transparent"
                 }
