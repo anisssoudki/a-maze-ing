@@ -4,7 +4,7 @@ class Timer {
      {
         this.duration = duration 
        this.renderTimer(duration)
-
+      this.createSvg()
        if(callbacks) 
          {
           this.onStart = callbacks.onStart;
@@ -48,7 +48,7 @@ class Timer {
     }
     createSvg = () => 
     {
-      let TimerDrawingElement = document.createElement('SVG')
-      document.body.appendChild(TimerDrawingElement)
+      let selectSvg = document.getElementById("svg")
+      selectSvg.innerHTML = `<circle r="50" cx="50" cy="50" stroke="blue" stroke-width="5">`
     }
 }
