@@ -86,4 +86,20 @@ saying make 3 arrays:
 [null,null,null]
 than.map will map the false values to the null values in the array 
 there is a grid generation schema in theimages file hope it would make more sense if anyone is confused here 
+if ur confused about the grid just for a min dont think about the outer walls and think about the inside the diagram below shows us v = vertical h=horizonal
+v|	v|
+h_ h_ h_
+v|	v|
+h_ h_ h_
+v|	v|
 
+if we would map ths to 2 arrays vertical and horizontal 
+we would have this v = [[value,value],
+						[value,value],
+						[value,value]
+					   ]
+					 h= [
+						[value,value,value],
+						[value,value,value]
+					 	]  
+						 

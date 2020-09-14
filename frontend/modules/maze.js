@@ -203,6 +203,7 @@ class Maze {
                     
 
                         const { Engine, Render, Runner, World, Bodies, MouseConstraint, Mouse} = Matter;
+                        const cells = 3 // this will abstract out the 3by3 maze to generate a bigger maze
                         const width = 600;
                         const height = 600
                         // when we create the engine we get a world object along with it
@@ -250,14 +251,14 @@ class Maze {
                         // }
                     
                         //maze generation
-                        const grid = Array(3).fill(null).map(() => Array(3).fill(false))
+                        const grid = Array(cells).fill(null).map(() => Array(cells).fill(false))
                     
-                        const verticals = Array(3).fill(null).map(() => Array(2).fill(false))
-                        const horizontals = Array(2).fill(null).map(()=> Array(3).fill(false))
-                        // console.log(grid)
-                        // console.log(horizontals)
-                        // console.log(verticals)
-
+                        const verticals = Array(cells).fill(null).map(() => Array(cells-1).fill(false))
+                        const horizontals = Array(cells-1).fill(null).map(()=> Array(cells).fill(false))
+                        // maze starting cell - this is going to be random
+                        const startRow = Math.floor(Math.random()*cells);
+                        const startColumn = Math.floor(Math.random()*cells)
+                        
                         const canvas = document.querySelector('canvas')
                     canvas.style.backgroundColor = "transparent"
                 }
