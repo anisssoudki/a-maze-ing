@@ -41,8 +41,30 @@ there is 2 ways i can do this
 the first one would be to have a player signup/login, pick a difficulty and the difficulty will be one of the params of the maze class than when the game finishes it will submit the score which is gonna be the difficulty level times a timer, so there is still a lot of work to do...  but the idea is having a player and a game 
 game belongs to a player and a player can have many games those games will have attributes such as time or score and difficulty.
 
+---------------------using fetch from hell----------------------------
+-----------------------audio implementation notes---------------------
+------------------------events notes---------------------------
+-----------------------player class notes------------------------
+--------------------------maze class notes-------------------
 
 
+
+		-------------------timer class notes---------------------
+first off i decided to take the input from the user only once to build
+everything for him instead of entering 3 inputs or what not 
+extracted  the timer from difficultylevel to make the game harder but give fair time to the player in order to finish the maze
+
+		-----svg or scalable vector graphics notes---
 svg is scalable vector graphics its an html element that we can use to draw a circle or arbitrary shapes on the screen
 one of the properties is permimeter which is basically radius times pi times 2 
 we can take advantage of that and the dasharray property in the circle we displayed to do something cool like have the border fill dissapear as the timer tick goes on
+
+** Math in javascript is weird try 1.9 -1 lol 
+
+offset formula that we need in order to make the circle earase itself in synchrony with the timer 
+
+offset = (perimeter*timeRemaining)/totalDuration - perimeter
+at the start the circle border is filled and dasharray is gonna equal to perimeter 
+and dashoffset will be 0 note dash offset removes the border clockwise and counterclockise depending on negative or positve value 
+at the end we should have dasharray = perimeter and dashoffset = -1*perimeter 
+because we are erasing or we can do 1*permiter to make the circle erase the other way arround. this is the last thng i have to implement than move on to building the maze

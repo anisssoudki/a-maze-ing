@@ -80,14 +80,24 @@ class Maze {
                    console.log(mazeDifficultyLevel)
                    
                    const bodyObject = {}
-                   bodyObject.difficulty = mazeDifficultyLevel || 5
-
-                   let timer = new Timer((bodyObject.difficulty*4)+5,{
+                   bodyObject.difficulty = parseFloat(mazeDifficultyLevel || 5, 10).toFixed(2)
+                   let currentOffset ;
+                  
+                   let timer = new Timer(((bodyObject.difficulty*4.00)+5.00).toFixed(2),{
                     onStart() {
-                      console.log('Timer started');
+                        
+                    //  currentOffset = ((bodyObject.difficulty*4.00)+5.00).toFixed(2);
+                    // console.log(currentOffset)
                     },
-                    onTick() {
-                      console.log('timer is ticking')
+                    onTick(timeRemaining) {
+                        // console.log(timeRemaining)
+                        const circle = document.querySelector('circle');
+                        currentOffset = ((bodyObject.difficulty*4.00)+5.00).toFixed(2);
+                        // console.log(currentOffset)
+                        // console.log(timeRemaining)
+                        // console.log( (((45*Math.PI*2)*timeRemaining/currentOffset) - (45*Math.PI*2)))
+                        circle.setAttribute('stroke-dashoffset', (((45*Math.PI*2)*timeRemaining/currentOffset) - (45*Math.PI*2)));
+                       
                     },
                     onComplete() {
                       console.log('Timer is completed');

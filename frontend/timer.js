@@ -16,14 +16,14 @@ class Timer {
 
      renderTimer(duration)
      {
-        if(this.onstart){this.onStart()}
+        if(this.onStart){this.onStart(this.timeRemaining)}
 
         let makeTimerInput = document.createElement("input")
         document.body.appendChild(makeTimerInput)
         makeTimerInput.setAttribute("value", `${duration}`)
         makeTimerInput.setAttribute("id", `duration`)
         console.log(makeTimerInput.value)
-         setInterval(this.tick,1000);
+         setInterval(this.tick,50);
      }
     tick = () => 
     {
@@ -34,22 +34,29 @@ class Timer {
                             if(this.onComplete){this.onComplete();}
                            }
      else {
-            selectTimer.value = timeRemaining - 1;
-            if(this.onTick){this.onTick()}
+       
+            selectTimer.value = timeRemaining - 0.05;
+            if(this.onTick){this.onTick(this.timeRemaining)}
           }
    
      
     }
-    pause = () => {clearInterval(setInterval(this.tick, 1000))}
+    pause = () => {clearInterval(setInterval(this.tick, 50))}
 
     get timeRemaining() {
       let selectTimer = document.getElementById('duration')
-       return parseInt(selectTimer.value, 10)
+       return parseFloat(selectTimer.value, 10).toFixed(2)
+    }
+    set timeRemaining(time) {
+      
+      parseFloat(selectTimer.value, 10).toFixed(2) = time;
+      console.log(time)
     }
     createSvg = () => 
     {
       let selectSvg = document.getElementById("svg")
       document.getElementById("svg").style.width = window.innerWidth
-      selectSvg.innerHTML = `<circle r="45" cx="${window.innerWidth/2}" cy="50" fill="transparent" stroke="blue" stroke-width="10" stroke-dasharray="${Math.PI*45}" stroke-dashoffset="0" transform="rotate(-90 ${window.innerWidth/2} 50">`
+      selectSvg.innerHTML = `<circle r="45" cx="${window.innerWidth/2}" cy="50" fill="transparent" stroke="blue" stroke-width="10" stroke-dasharray="${Math.PI*45*2}" transform="rotate(-90 ${window.innerWidth/2} 50)">`
+      
     }
 }
