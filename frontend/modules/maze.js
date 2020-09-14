@@ -262,6 +262,13 @@ class Maze {
                         const stepThroughCell = (row,column) => {
                             if (grid[row][column] === true){return;}
                             grid[row][column] = true; 
+                            const neighbors = 
+                            [
+                            [row - 1, column],
+                            [row, column + 1],
+                            [row + 1, column],
+                            [row, column - 1]
+                            ]
                         }
                         stepThroughCell(startRow,startColumn)
                         console.log(grid)

@@ -118,3 +118,9 @@ after this and starting at a random point
 } 
 
                         }
+assemble randomly-ordered list of neighbors is basically doing some manipulation to find out what are the neighboring cells for example if i start randomly at row=1 colum=1 my neighborabove is gonna be:
+
+above= row-1, samcolumn
+right= samerow, column+1 
+left= samerow, column-1
+below= row+, samecolumn
