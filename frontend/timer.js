@@ -47,11 +47,7 @@ class Timer {
       let selectTimer = document.getElementById('duration')
        return parseFloat(selectTimer.value, 10).toFixed(2)
     }
-    set timeRemaining(time) {
-      
-      parseFloat(selectTimer.value, 10).toFixed(2) = time;
-      console.log(time)
-    }
+   
     createSvg = () => 
     {
       let selectSvg = document.getElementById("svg")
