@@ -77,7 +77,7 @@ class Maze {
     // we need to code out the maze than make sure we pass in the correct parameters to generate it
                     let mazePlayerId = parseInt(difficultyForm, 10)
                    let mazeDifficultyLevel = parseInt(level, 10)
-                   let timer = new Timer(mazeDifficultyLevel*4)
+                   let timer = new Timer((mazeDifficultyLevel*4)+5)
                    
                    console.log(mazeDifficultyLevel)
                    const bodyObject = {}
