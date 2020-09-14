@@ -44,3 +44,5 @@ game belongs to a player and a player can have many games those games will have 
 
 
 svg is scalable vector graphics its an html element that we can use to draw a circle or arbitrary shapes on the screen
+one of the properties is permimeter which is basically radius times pi times 2 
+we can take advantage of that and the dasharray property in the circle we displayed to do something cool like have the border fill dissapear as the timer tick goes on

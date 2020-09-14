@@ -49,6 +49,7 @@ class Timer {
     createSvg = () => 
     {
       let selectSvg = document.getElementById("svg")
-      selectSvg.innerHTML = `<circle r="50" cx="50" cy="50" stroke="blue" stroke-width="5">`
+      document.getElementById("svg").style.width = window.innerWidth
+      selectSvg.innerHTML = `<circle r="45" cx="${window.innerWidth/2}" cy="50" fill="transparent" stroke="blue" stroke-width="10" stroke-dasharray="${Math.PI*45}">`
     }
 }
