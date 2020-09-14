@@ -203,22 +203,3 @@ function listeners() {
 }
 
 
-function wipeDom() {
-
-  let deltediv = document.getElementById('signInDiv')
-  let getCanvas = document.getElementsByTagName('canvas')
-   let delCanvas =  getCanvas[0]
-   delCanvas.remove() 
-   deltediv.remove()
-   let delBtn = document.getElementsByTagName('button')
-    delBtn[0].remove()
-    delBtn[1].remove()
-   
-    document.getElementsByTagName('form')[0].remove()
-    let delDiv = document.getElementsByTagName('div')
-    delDiv[0].remove()
-    // delDiv[1].remove()
-  
-  
-  document.getElementById("title").innerText = "thanks for playing refresh to relod sign-up/sign-in page"
-}

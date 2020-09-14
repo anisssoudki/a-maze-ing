@@ -51,21 +51,35 @@ class Maze {
 
         static fetchMazeRecordForPlayer(player_id) 
         {
-            let div = document.createElement("div")
-            document.body.appendChild(div)
-            fetch(Maze.baseUrl()+`players/${player_id}/mazes`)
+            let div = document.getElementById("mazeDetails")
+            if (div === null) {
+                div = document.createElement("div")
+                div.setAttribute("id","mazeDetails")
+                document.body.appendChild(div)
+            }
+            else {
+                div.innerHTML=""
+            }
+             
+            
+           
+           
+            fetch(Maze.baseUrl()+`players/${player_id}`)
             .then(resp => resp.json())
             .then(data => 
-                data.forEach(function(obj)
-                {console.log(obj)
+               data.mazes.forEach(element => 
+                
+                {
                     
-                     
+            //         //  abstract 
                         let h2 = document.createElement("h2") 
-                        h2.textContent  = `${obj.player.name} Maze record: Maze id:${obj.id}, difficulty:${obj.difficulty}, time:${obj.time}, player id :${obj.player_id} `
+                        h2.textContent  = `Maze Details: id:${element.id}, level: ${element.difficulty}, timer: ${element.time},
+                        Score=${element.difficulty*element.time}
+                        `
                         div.appendChild(h2) 
                         
-              }
-              ))}
+            //   }
+                }))}
 
               static getBodyObject(event)
               {
@@ -85,9 +99,7 @@ class Maze {
                   
                    let timer = new Timer(((bodyObject.difficulty*4.00)+5.00).toFixed(2),{
                     onStart() {
-                        
-                    //  currentOffset = ((bodyObject.difficulty*4.00)+5.00).toFixed(2);
-                    // console.log(currentOffset)
+                        window.alert("Get ready click OK to start the game")
                     },
                     onTick(timeRemaining) {
                         // console.log(timeRemaining)
@@ -97,16 +109,17 @@ class Maze {
                         // console.log(timeRemaining)
                         // console.log( (((45*Math.PI*2)*timeRemaining/currentOffset) - (45*Math.PI*2)))
                         circle.setAttribute('stroke-dashoffset', (((45*Math.PI*2)*timeRemaining/currentOffset) - (45*Math.PI*2)));
-                       
+                        
                     },
-                    onComplete() {
-                      console.log('Timer is completed');
+                    onComplete(i) {
+                         console.log(i)
                     }})
 
                    bodyObject.time = timer.duration 
                    timer.onStart()
                    timer.onTick()
-                   timer.onComplete()
+                //  timer.onComplete()
+                
                    bodyObject.player_id = mazePlayerId
                    console.log(bodyObject)
                     // Maze.getBodyObject(event)
@@ -190,7 +203,7 @@ class Maze {
                     
 
                         const { Engine, Render, Runner, World, Bodies, MouseConstraint, Mouse} = Matter;
-                        const width = 800;
+                        const width = 600;
                         const height = 600
                         // when we create the engine we get a world object along with it
                         // create engine
@@ -210,7 +223,7 @@ class Maze {
                         Render.run(render);
                         Runner.run(Runner.create(), engine);
                     
-                        function shape(x,y,width,height,options) {
+                        function createWall(x,y,width,height,options) {
                             return Bodies.rectangle(x, y, width, height, options);
                         } 
                     
@@ -221,10 +234,10 @@ class Maze {
                     
                         const walls = 
                         [
-                        shape(400, 0, 800, 40, {isStatic: true, render:{fillStyle:"purple"}}),
-                        shape(0, 400, 40, 800, {isStatic: true, render:{fillStyle:"purple"}}),
-                        shape(400, 600, 800, 40, {isStatic: true, render:{fillStyle:"purple"}}),
-                        shape(800, 300, 40, 800, {isStatic: true, render:{fillStyle:"purple"}})
+                            createWall(width/2, 0, width, 40, {isStatic: true, render:{fillStyle:"purple"}}),
+                            createWall(width/2, height, width, 40, {isStatic: true, render:{fillStyle:"purple"}}),
+                            createWall(0, height/2, 40, height, {isStatic: true, render:{fillStyle:"purple"}}),
+                            createWall(width, height/2, 40, height, {isStatic: true, render:{fillStyle:"purple"}})
                         ]
                     
                         World.add(world, walls);
@@ -232,11 +245,19 @@ class Maze {
                             mouse: Mouse.create(render.canvas)
                         }))
                     
-                        for (let i=0; i < difficulty; i++){
-                        World.add(world, shape(Math.random()*width, Math.random()*height, 40, 40, {isStatic: false})) 
-                        }
+                        // for (let i=0; i < difficulty; i++){
+                        // World.add(world, shape(Math.random()*width, Math.random()*height, 40, 40, {isStatic: false})) 
+                        // }
                     
-
+                        //maze generation
+                        const grid = [];
+                        for (let i = 0; i < 3; i++) {
+                            grid.push([]);
+                            for (let j=0;j<3;j++){
+                                grid[i].push(false);
+                        }
+                    }
+                    console.log(grid)
 
                         const canvas = document.querySelector('canvas')
                     canvas.style.backgroundColor = "transparent"

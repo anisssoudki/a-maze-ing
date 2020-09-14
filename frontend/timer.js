@@ -19,29 +19,34 @@ class Timer {
         if(this.onStart){this.onStart(this.timeRemaining)}
 
         let makeTimerInput = document.createElement("input")
+        makeTimerInput.setAttribute("hidden","true")
         document.body.appendChild(makeTimerInput)
         makeTimerInput.setAttribute("value", `${duration}`)
         makeTimerInput.setAttribute("id", `duration`)
         console.log(makeTimerInput.value)
          setInterval(this.tick,50);
      }
+     pause = () => {clearInterval(setInterval(this.tick, 50))}
     tick = () => 
     {
       let selectTimer = document.getElementById('duration')
      let timeRemaining = this.timeRemaining;
      if(timeRemaining <=0) {
-                            this.pause()
-                            if(this.onComplete){this.onComplete();}
+                              return this.pause()
+                            
+                            
+                           
                            }
      else {
        
             selectTimer.value = timeRemaining - 0.05;
             if(this.onTick){this.onTick(this.timeRemaining)}
+           
           }
    
      
     }
-    pause = () => {clearInterval(setInterval(this.tick, 50))}
+  
 
     get timeRemaining() {
       let selectTimer = document.getElementById('duration')
