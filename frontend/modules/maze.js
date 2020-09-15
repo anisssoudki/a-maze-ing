@@ -202,7 +202,7 @@ class Maze {
                     document.body.appendChild(pauseBtn)
                     
 
-                        const { Engine, Render, Runner, World, Bodies, Body} = Matter;
+                        const { Engine, Render, Runner, World, Bodies, Body, Events} = Matter;
                         console.log(difficulty)
                         const cells = parseInt(difficulty, 10) // this will abstract out the 3by3 maze to generate a bigger maze
                        function shuffle(arr) {
@@ -217,14 +217,15 @@ class Maze {
                             }
                             return arr; //return the array
                         }
-                        const width = 600;
-                        const height = 600;
+                        const width = window.innerWidth*.9;
+                        const height = window.innerHeight*.5;
                         const unitLength = width / cells; //if cells = 3 and width is 600 than every cell would be 200 px in width
                         
                         
                         // when we create the engine we get a world object along with it
                         // create engine
                         const engine = Engine.create(); 
+                        engine.world.gravity.y = 0
                         const { world } = engine; 
                         // create renderer-this is an additive process to document.body in other words it will not destroy any element inside of the body in the html
                         const render = Render.create({
@@ -244,29 +245,31 @@ class Maze {
                             return Bodies.rectangle(x, y, width, height, options);
                         } 
                         //our target
-                        const target = Bodies.rectangle(width-unitLength/2,height-unitLength/2, unitLength/3,unitLength/3, {isStatic:true})
+                        const target = Bodies.rectangle(width-unitLength/2,height-unitLength/2, unitLength/3,unitLength/3, {label: 'target',isStatic:true})
                         //ball to move to target
                         const ball = Bodies.circle(
-                            unitLength/2, unitLength/2, unitLength*.1
+                            unitLength/2, unitLength/2, unitLength*.1,{label: 'ball'}
                         )
                         document.addEventListener('keydown', event => {
-                            if (event.keyCode===87) //moveup
-                            {
-
+                            const { x, y } = ball.velocity;
+                          
+                            if (event.keyCode === 87) {
+                              Body.setVelocity(ball, { x, y: y - 1 });
                             }
-                            if (event.keyCode===68) //moveright
-                            {
-
+                          
+                            if (event.keyCode === 68) {
+                              Body.setVelocity(ball, { x: x + 1, y });
                             }
-                            if (event.keyCode===83) //movedown
-                            {
-
+                          
+                            if (event.keyCode === 83) {
+                              Body.setVelocity(ball, { x, y: y + 1 });
                             }
-                            if (event.keyCode===65) //moveleft
-                            {
-
+                          
+                            if (event.keyCode === 65) {
+                              Body.setVelocity(ball, { x: x - 1, y });
                             }
-                        })
+                          });
+                   
                         // console.log(shape)
                     
                         // console.log(world)
@@ -280,6 +283,7 @@ class Maze {
                             createWall(width, height/2, 5, height, {isStatic: true, render:{fillStyle:"purple"}})
                         ]
                     
+                        World.add(world, walls);
                       
                     
                         // for (let i=0; i < difficulty; i++){
@@ -354,9 +358,12 @@ class Maze {
                                        columnIndex*unitLength + unitLength/2,
                                        rowIndex*unitLength + unitLength,
                                        unitLength,
-                                       3,
+                                       15,
                                        {
-                                           isStatic:true
+                                           isStatic:true,
+                                           render: {
+                                            fillStyle: 'purple'
+                                          }
                                        }
                                    );
                                    World.add(world, wall)
@@ -373,19 +380,31 @@ class Maze {
                                 const wall = Bodies.rectangle(
                                     columnIndex*unitLength + unitLength,
                                     rowIndex*unitLength +unitLength/2,
-                                    3,
+                                    15,
                                     unitLength,
-                                    {isStatic: true}
+                                    {
+                                        isStatic: true,
+                                        render: {
+                                            fillStyle: 'purple'
+                                          }
+                                    }
                                 )
                                 World.add(world, wall)
                             })
                         })
 
+                        Events.on(engine, 'collisionStart', event => {
+                            event.pairs.forEach(collision => {
+                            console.log(collision)
+                          
+                          
+                            });
+                          });
                         
                         World.add(world,target)
                         World.add(world,ball)
-                        console.log(verticals)
-                        console.log(horizontals)
+
+                 
                       
                         const canvas = document.querySelector('canvas')
                     canvas.style.backgroundColor = "transparent"
