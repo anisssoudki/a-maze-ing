@@ -272,28 +272,39 @@ class Maze {
                         const startColumn = Math.floor(Math.random()*cells)
                         // see notes line 107 for the method below
                         const stepThroughCell = (row,column) => {
+                          
                             if (grid[row][column] === true){return;}
                             grid[row][column] = true; 
                             const neighbors = 
                             shuffle( [
-                             [row - 1, column, 'up'], //up
-                             [row, column + 1, 'right'], //right
-                             [row + 1, column, 'down'], //down
+                                
+                            //  [row - 1, column, 'up'], //up
+                            //  [row, column + 1, 'right'], //right
+                            //  [row + 1, column, 'down'], //down
                              [row, column - 1, 'left'] //left
                              ]); 
-                          for (let neighbor of neighbors){
+                          for (let neighbor of neighbors){ //refers to every array inside of the neighbors const
 
-                        const[nextRow, nextColumn] = neighbor;
+                        const[nextRow, nextColumn, direction] = neighbor; //destructuring nextRow and nextColumn so we have them as variables
                         //check neighbor out of bounds
-                        if(nextRow<0||nextRow>=cells||nextColumn<0||nextColumn>=cells) {continue;}
-                        // neighbor visited? continueto next neighbor
-                        if(gird[nextRow][nextColumn]) {continue;}
+                        if(nextRow<0||nextRow>=cells||nextColumn<0||nextColumn>=cells) {continue;} //using those variable to check conditional logic for outof bounds
+                        // neighbor visited? continue to next neighbor
+                        
+                        if(grid[nextRow][nextColumn]) {continue;} //mark the cell visited by changing the value to true
+                        // console.log(grid[nextRow][nextColumn])
 
                         // remove a wall from either horizantals or verticals
-
+                        // right left for verticals because we are staing in the same row
+                        // top bottom for horizontals because we will be on the same column
+                            if(direction === 'left') 
+                            {
+                                verticals[row][column - 1] = true;
+                            } else if (direction === 'right') {
+                                verticals[row][column] = true;
+                            }
                           }
                             }
-                         
+                         console.log(verticals)
                         stepThroughCell(1,1)
                         
                         console.log(grid)
