@@ -278,9 +278,9 @@ class Maze {
                             const neighbors = 
                             shuffle( [
                                 
-                            //  [row - 1, column, 'up'], //up
-                            //  [row, column + 1, 'right'], //right
-                            //  [row + 1, column, 'down'], //down
+                             [row - 1, column, 'up'], //up
+                             [row, column + 1, 'right'], //right
+                             [row + 1, column, 'down'], //down
                              [row, column - 1, 'left'] //left
                              ]); 
                           for (let neighbor of neighbors){ //refers to every array inside of the neighbors const
@@ -296,18 +296,26 @@ class Maze {
                         // remove a wall from either horizantals or verticals
                         // right left for verticals because we are staing in the same row
                         // top bottom for horizontals because we will be on the same column
-                            if(direction === 'left') 
+                              if(direction === 'left')
                             {
                                 verticals[row][column - 1] = true;
-                            } else if (direction === 'right') {
+                            }  else if (direction === 'right') 
+                            {
                                 verticals[row][column] = true;
+                            }  else if (direction === 'up') 
+                            {
+                                horizontals[row -1][column] = true;
+                            }  else if (direction === 'down') 
+                            {
+                                horizontals[row][column] = true;
                             }
+                            stepThroughCell(nextRow,nextColumn)
                           }
                             }
-                         console.log(verticals)
-                        stepThroughCell(1,1)
                         
-                        console.log(grid)
+                        stepThroughCell(startRow,startColumn)
+                        console.log(verticals)
+                        console.log(horizontals)
                       
                         const canvas = document.querySelector('canvas')
                     canvas.style.backgroundColor = "transparent"
