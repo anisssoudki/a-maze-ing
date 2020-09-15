@@ -1,11 +1,12 @@
 class Timer {
-    
+    static all = [] 
     constructor(duration, callbacks)
      {
         this.duration = duration 
        this.renderTimer(duration)
       if(this.createSvg()) {this.createSvg().remove()}
       this.createSvg()
+      this.save()
        if(callbacks) 
          {
           this.onStart = callbacks.onStart;
@@ -14,13 +15,20 @@ class Timer {
          }
       
      }
-
+     save() 
+     {
+         Timer.all.push(this);
+         
+     }
      renderTimer(duration)
      {
-        if(this.onStart){this.onStart(this.timeRemaining)}
-
-        let makeTimerInput = document.createElement("input")
-        makeTimerInput.setAttribute("hidden","true")
+      let makeTimerInput 
+        if(this.onStart){this.onStart(this.timeRemaining(duration))}
+    
+   
+         makeTimerInput = document.createElement("input")
+        
+        // makeTimerInput.setAttribute("hidden","true")
         document.body.appendChild(makeTimerInput)
         makeTimerInput.setAttribute("value", `${duration}`)
         makeTimerInput.setAttribute("id", `duration`)
@@ -34,7 +42,7 @@ class Timer {
      let timeRemaining = this.timeRemaining;
      if(timeRemaining <=0) {
                               return this.pause()
-                            
+                              
                             
                            
                            }
@@ -50,15 +58,21 @@ class Timer {
   
 
     get timeRemaining() {
+      
       let selectTimer = document.getElementById('duration')
-       return parseFloat(selectTimer.value, 10).toFixed(2)
+      let value = parseFloat(selectTimer.value, 10).toFixed(2) 
+     return value
+    }
+    set timeRemaining(time) {
+      this.durationInput.value = time;
     }
    
     createSvg = () => 
     {
+     
       let selectSvg = document.getElementById("svg")
       document.getElementById("svg").style.width = window.innerWidth
-      selectSvg.innerHTML = `<circle r="45" cx="${window.innerWidth/2}" cy="50" fill="transparent" stroke="blue" stroke-width="10" stroke-dasharray="${Math.PI*45*2}" transform="rotate(-90 ${window.innerWidth/2} 50)">`
-      
+      selectSvg.innerHTML = `<circle id="circle" r="45" cx="${window.innerWidth/2}" cy="50" fill="transparent" stroke="blue" stroke-width="10" stroke-dasharray="${Math.PI*45*2}" transform="rotate(-90 ${window.innerWidth/2} 50)">`
+     
     }
 }

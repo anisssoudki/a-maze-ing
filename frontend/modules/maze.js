@@ -109,7 +109,7 @@ class Maze {
                         // console.log(timeRemaining)
                         // console.log( (((45*Math.PI*2)*timeRemaining/currentOffset) - (45*Math.PI*2)))
                         circle.setAttribute('stroke-dashoffset', (((45*Math.PI*2)*timeRemaining/currentOffset) - (45*Math.PI*2)));
-                        
+                  
                     },
                     onComplete(i) {
                          console.log(i)
@@ -149,52 +149,18 @@ class Maze {
                 .then(data =>{console.log(data)
                    
                 })
-                   
-                    
-                
-               
-
               }
           
-        
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
- 
 // probably gonna have several arguments in this instance method like ball target maze difficulty time 
 // than make the class create an instance everytime new is called everythng start from here
                 startgame(difficulty) 
                 {
                     
-                    if (difficulty > 15){
+                    if (difficulty > 15 && difficulty < 29){
+                        audio1.pause()
                         audio2.play()
-                    } 
+                    } else if (difficulty >= 30)
+                    {mcHammerSuperLevel()}
                     else {
                         audio1.play()
                     }
@@ -367,20 +333,15 @@ class Maze {
                     });
                     
                     // Goal
-                    
-                    const goal = Bodies.rectangle(
-                      width - unitLengthX / 2,
-                      height - unitLengthY / 2,
-                      unitLengthX * 0.7,
-                      unitLengthY * 0.7,
-                      {
+                    const goalRadius = Math.min(unitLengthX, unitLengthY) / 4;
+                    const goal = Bodies.circle( width - unitLengthX / 2,
+                        height - unitLengthY / 2,  goalRadius, {
                         label: 'goal',
-                        isStatic: true,
                         render: {
+                            isStatic: true,
                           fillStyle: 'green'
                         }
-                      }
-                    );
+                      });
                     World.add(world, goal);
                     
                     // Ball
@@ -398,19 +359,19 @@ class Maze {
                       const { x, y } = ball.velocity;
                     
                       if (event.keyCode === 87) {
-                        Body.setVelocity(ball, { x, y: y - 5 });
+                        Body.setVelocity(ball, { x, y: y - .3 });
                       }
                     
                       if (event.keyCode === 68) {
-                        Body.setVelocity(ball, { x: x + 5, y });
+                        Body.setVelocity(ball, { x: x + .3, y });
                       }
                     
                       if (event.keyCode === 83) {
-                        Body.setVelocity(ball, { x, y: y + 5 });
+                        Body.setVelocity(ball, { x, y: y + .3 });
                       }
                     
                       if (event.keyCode === 65) {
-                        Body.setVelocity(ball, { x: x - 5, y });
+                        Body.setVelocity(ball, { x: x - .3, y });
                       }
                     });
                     
@@ -425,16 +386,18 @@ class Maze {
                           labels.includes(collision.bodyB.label)
                         ) {
                           world.gravity.y = 1;
+                            
+                      
                           world.bodies.forEach(body => {
                             if (body.label === 'wall') {
                               Body.setStatic(body, false);
-                              const circle = document.querySelector('circle');
-                              circle.setAttribute('stroke-dashoffset', '288')
+                             
+                             
                             }
                           });
                         }
                       });
-                  
+                      engine.gravity.y = 1
                     });
                     const nextLevelBtn = document.createElement("button")
                     document.body.appendChild(nextLevelBtn)
@@ -442,42 +405,29 @@ class Maze {
                     console.log(nextLevelBtn)
                     nextLevelBtn.addEventListener('click', event => {
                         event.preventDefault()
+                        background()
                             nextLevelBtn.remove()
+                            audio3.pause()
                             this.wipeCanvas()
                            let newDifficulty = parseInt(this.difficulty, 10) + 1
                         //    let newTimer = parseInt(this.time, 10) + 4
                            let playerId = this.player_id 
                            const newBodyObject = {}
                            newBodyObject.difficulty = parseFloat(newDifficulty, 10).toFixed(2)
-                           let currentOffset ;
+                          
+                       
                   
-                           let timer = new Timer(((newBodyObject.difficulty*4.00)+5.00).toFixed(2),{
-                            onStart() {
-                                window.alert("Get ready click OK to start next level")
-                            },
-                            onTick(timeRemaining) {
-                                // console.log(timeRemaining)
-                                const circle = document.querySelector('circle');
-                                currentOffset = ((newBodyObject.difficulty*4.00)+5.00).toFixed(2);
-                                // console.log(currentOffset)
-                                // console.log(timeRemaining)
-                                // console.log( (((45*Math.PI*2)*timeRemaining/currentOffset) - (45*Math.PI*2)))
-                              
-                                circle.setAttribute('stroke-dashoffset', (((45*Math.PI*2)*timeRemaining/currentOffset) - (45*Math.PI*2)));
-                                
-                            },
-                            onComplete(i) {
-                                 console.log(i)
-                            }})
+                     
         
-                           newBodyObject.time = timer.duration 
-                           timer.onStart()
-                           timer.onTick()
-                        //  timer.onComplete()
-                        
+                           newBodyObject.time = (newBodyObject.difficulty*4+5)
                            newBodyObject.player_id = playerId
-                           console.log(newBodyObject)
+                         let newLevelTimer =  document.getElementById('duration')
+                         console.log(newBodyObject.time)
+                         newLevelTimer.value = 0
+                           newLevelTimer.value = parseInt(newBodyObject.time, 10)
+                           console.log(newLevelTimer.value)
                           Maze.PlayGameAndSaveRecord(newBodyObject)
+                      
                     })
                     
                      
