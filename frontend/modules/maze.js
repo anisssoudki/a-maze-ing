@@ -204,6 +204,18 @@ class Maze {
 
                         const { Engine, Render, Runner, World, Bodies, MouseConstraint, Mouse} = Matter;
                         const cells = 3 // this will abstract out the 3by3 maze to generate a bigger maze
+                        const shuffle = (arr) => {
+                            let counter = arr.length; //decrement this in the loop because we want to start at arr.length-1
+                            while (counter > 0)  //counter
+                            {
+                            const index = Math.floor(Math.random()*counter); //random number between 0 and counter
+                            counter --; 
+                            const temp = arr[counter]; //temp array where we can get the random index positions value 
+                            arr[counter] = arr[index]; //take the array at random index and sawp it with the initial array;s index
+                            arr[index] = temp; //target index position in the loop passing and put the temp value into that
+                            }
+                            return arr; //return the array
+                        }
                         const width = 600;
                         const height = 600
                         // when we create the engine we get a world object along with it
@@ -263,12 +275,14 @@ class Maze {
                             if (grid[row][column] === true){return;}
                             grid[row][column] = true; 
                             const neighbors = 
-                            [
+                           suffle( [
                             [row - 1, column],
                             [row, column + 1],
                             [row + 1, column],
                             [row, column - 1]
-                            ]
+                            ]);
+
+
                         }
                         stepThroughCell(startRow,startColumn)
                         console.log(grid)

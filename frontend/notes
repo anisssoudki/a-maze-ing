@@ -118,9 +118,27 @@ after this and starting at a random point
 } 
 
                         }
-assemble randomly-ordered list of neighbors is basically doing some manipulation to find out what are the neighboring cells for example if i start randomly at row=1 colum=1 my neighborabove is gonna be:
+assemble randomly-ordered list of neighbors is basically doing some manipulation to find out what are the neighboring cells for example if i start randomly at row=1 colum=1 my neighbors are gonna be:
 
 above= row-1, samcolumn
 right= samerow, column+1 
 left= samerow, column-1
 below= row+, samecolumn
+
+Fisher and Yates' shuffle algorithm imbeded in the shuffle method since javascriptdoesnt have an imbeded shuffle method like other languages
+https://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle
+
+  const shuffle = (arr) => {
+                            let counter = arr.length;
+                            while (counter > 0) 
+                            {
+                            const index = Math.floor(Math.random()*counter);
+                            counter --; 
+                            const temp = arr[counter];
+                            arr[counter] = arr[index];
+                            arr[index] = temp;
+                            }
+                            return arr;
+                        }
+						shuffle([1,2,3]) test this in the console 
+this explains the algorithm well => https://www.youtube.com/watch?v=tLxBwSL3lPQ
