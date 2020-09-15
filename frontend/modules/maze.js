@@ -204,7 +204,7 @@ class Maze {
 
                         const { Engine, Render, Runner, World, Bodies, MouseConstraint, Mouse} = Matter;
                         const cells = 3 // this will abstract out the 3by3 maze to generate a bigger maze
-                        const shuffle = (arr) => {
+                       function shuffle(arr) {
                             let counter = arr.length; //decrement this in the loop because we want to start at arr.length-1
                             while (counter > 0)  //counter
                             {
@@ -275,17 +275,19 @@ class Maze {
                             if (grid[row][column] === true){return;}
                             grid[row][column] = true; 
                             const neighbors = 
-                           suffle( [
-                            [row - 1, column],
-                            [row, column + 1],
-                            [row + 1, column],
-                            [row, column - 1]
-                            ]);
-
-
-                        }
-                        stepThroughCell(startRow,startColumn)
+                            shuffle( [
+                             [row - 1, column],
+                             [row, column + 1],
+                             [row + 1, column],
+                             [row, column - 1]
+                             ]); 
+                             console.log(neighbors)
+                            }
+                         
+                        stepThroughCell(1,1)
+                        
                         console.log(grid)
+                      
                         const canvas = document.querySelector('canvas')
                     canvas.style.backgroundColor = "transparent"
                 }
