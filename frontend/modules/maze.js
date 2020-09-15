@@ -276,12 +276,22 @@ class Maze {
                             grid[row][column] = true; 
                             const neighbors = 
                             shuffle( [
-                             [row - 1, column],
-                             [row, column + 1],
-                             [row + 1, column],
-                             [row, column - 1]
+                             [row - 1, column, 'up'], //up
+                             [row, column + 1, 'right'], //right
+                             [row + 1, column, 'down'], //down
+                             [row, column - 1, 'left'] //left
                              ]); 
-                             console.log(neighbors)
+                          for (let neighbor of neighbors){
+
+                        const[nextRow, nextColumn] = neighbor;
+                        //check neighbor out of bounds
+                        if(nextRow<0||nextRow>=cells||nextColumn<0||nextColumn>=cells) {continue;}
+                        // neighbor visited? continueto next neighbor
+                        if(gird[nextRow][nextColumn]) {continue;}
+
+                        // remove a wall from either horizantals or verticals
+
+                          }
                             }
                          
                         stepThroughCell(1,1)
