@@ -7,6 +7,6 @@ pauseBtn.innerText="pause music"
 
 
 pauseBtn.addEventListener("click", event => {
-
+    event.preventDefault()
  audio1.pause() || audio2.pause() || audio3.pause()
 })

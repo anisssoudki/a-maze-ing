@@ -4,7 +4,7 @@ body {
   background-blend-mode: lighten;
   background-size: cover;
 }
-h1 {
+h4 {
   margin-left: auto;
   margin-right: auto;
  
@@ -26,7 +26,7 @@ div {
   
 }
 form {
-  font-size:40px;
+  font-size:11px;
   display: block;
   width: 100%;
   border: none;
@@ -41,8 +41,8 @@ form {
  
 }
 button {
-  font-size:40px;
-  display: block;
+  font-size:11px;
+  
   width: 100%;
   border: none;
   color: rgb(247, 247, 9);
@@ -54,7 +54,7 @@ button {
   align-items: center;
 }
 
-h2 {
+h6 {
   display: inline-table;
   color:rgb(247, 247, 9);
   padding: 20px 20px;
@@ -77,4 +77,19 @@ canvas {
     margin-left: auto;
     margin-right: auto;
     display: block;
+   
+  
+  
+}
+.signOutBanner {
+  color:#444;
+  border:0px solid #CCC;
+  background: transparent;
+  color: yellow;
+  box-shadow: 0 0 5px -1px rgba(0,0,0,0.2);
+  cursor:pointer;
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;    
+  justify-content: flex-start
 }

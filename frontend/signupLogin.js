@@ -45,6 +45,7 @@ function renderForm() {
   
   
   });
+  
 }
 function listeners() {    
   signInDiv.addEventListener('submit', event => {
@@ -70,41 +71,56 @@ function listeners() {
               for (player of players) 
                 {
                       if (player.name.toLowerCase() === input.toLowerCase())
-                    signInDiv.innerHTML = `<div class="signOutBanner">welcome back ${player.name}<button id="signout">signout</button></div>
+                    signInDiv.innerHTML = `<div class="signOutBanner">welcome  ${player.name}<button id="signout">signout</button></div>
                     <div id="${player.name}">${player.id}</div>
                     `
                     
                 }
              
-                console.log(input)  
+             
                
                 let ShowMazeReocrds = document.createElement('button')
+                let HideMazeReocrds = document.createElement('button')
                 let userdivselector = document.getElementById(`${input.toLowerCase()}`) 
                 let UserId = userdivselector.innerHTML
                 if (UserId === null) {window.alert("you must sign up")}
+                userdivselector.remove()
                 let difficultyForm = document.createElement('div') 
                 difficultyForm.innerHTML = `<form>
-                <input list="level" name="level"> enter num between 1 and 50 for Maze difficulty level
+                <input list="level" name="level"> enter a number between 5 and 30 for Maze difficulty level
                 <input type="submit">
               </form>`
-
-               difficultyForm.setAttribute("id",`${UserId}`)
+              let signoutbtn = document.getElementById("signout")
+              console.log(signoutbtn)
+              signoutbtn.addEventListener('click', event => {
+                event.preventDefault()
+                wipeDom()
+                
+                 
+                })
+                difficultyForm.setAttribute("id",`${UserId}`)
                 ShowMazeReocrds.setAttribute("id", `${UserId}`)
              
                 ShowMazeReocrds.innerText = "show Maze Scores"
-               
+                HideMazeReocrds.innerText = "Hide Maze Scores"
                
                 document.body.appendChild(ShowMazeReocrds)
+                document.body.appendChild(HideMazeReocrds)
                 document.body.appendChild(difficultyForm)
-               
-                difficultyForm.addEventListener('submit', event => {Maze.getBodyObject(event)})
+                 
+                difficultyForm.addEventListener('submit', event => {Maze.getBodyObject(event),  pauseGame()})
                
                 ShowMazeReocrds.addEventListener('click', event => {
                   event.preventDefault()
                 Maze.fetchMazeRecordForPlayer(UserId)
+                
              
                 })
-                
+                HideMazeReocrds.addEventListener('click', event => {
+                  event.preventDefault()
+              let records = document.getElementById("mazeDetails")
+              records.remove()
+                })
               let playerDeleteDiv = document.createElement('div')
               document.body.appendChild(playerDeleteDiv)
             playerDeleteDiv.innerHTML = `<form method="DELETE">
@@ -113,10 +129,7 @@ function listeners() {
             playerDeleteDiv.addEventListener('click', event => {
               event.preventDefault()
               parsedUserId = parseInt(UserId, 10)
-              console.log(parsedUserId)
-              console.log(input)
-              console.log(signInDiv)
-              console.log(event)
+             
              
               Player.deletePlayerAndAllMazeRecords(parsedUserId, signInDiv)
              wipeDom()
@@ -148,37 +161,52 @@ function listeners() {
                     console.log(input)  
                    
                     let ShowMazeReocrds = document.createElement('button')
+                    let HideMazeReocrds = document.createElement('button')
                     let userdivselector = document.getElementById(`${input.toLowerCase()}`) 
                     if (userdivselector === null) {window.alert("Playername doesnt exist You must signup with that name first")}
                     let UserId = userdivselector.innerHTML
-                   
+                    console.log(userdivselector)
+                    userdivselector.remove()
+                  
                     let difficultyForm = document.createElement('div') 
                     difficultyForm.innerHTML = `<form>
-                    <input list="level" name="level"> enter num between 5 and 20 for Maze difficulty level
+                    <input list="level" name="level"> enter a number between 5 and 30 for Maze difficulty level
                     <input type="submit">
                   </form>`
-
-                   difficultyForm.setAttribute("id",`${UserId}`)
+                  let signoutbtn = document.getElementById("signout")
+                  console.log(signoutbtn)
+                  signoutbtn.addEventListener('click', event => {
+                    event.preventDefault()
+                    wipeDom()
+                    
+                     
+                    })
+                    difficultyForm.setAttribute("id",`${UserId}`)
                     ShowMazeReocrds.setAttribute("id", `${UserId}`)
                  
                     ShowMazeReocrds.innerText = "show Maze Scores"
-                   
+                    HideMazeReocrds.innerText = "Hide Maze Scores"
                    
                     document.body.appendChild(ShowMazeReocrds)
+                    document.body.appendChild(HideMazeReocrds)
                     document.body.appendChild(difficultyForm)
                    
-                    difficultyForm.addEventListener('submit', event => {Maze.getBodyObject(event)})
+                    difficultyForm.addEventListener('submit', event => {Maze.getBodyObject(event),pauseGame()})
                    
                     ShowMazeReocrds.addEventListener('click', event => {
                       event.preventDefault()
                     Maze.fetchMazeRecordForPlayer(UserId)
                  
                     })
-                    
+                    HideMazeReocrds.addEventListener('click', event => {
+                      event.preventDefault()
+                  let records = document.getElementById("mazeDetails")
+                  records.remove()
+                    })
                   let playerDeleteDiv = document.createElement('div')
                   document.body.appendChild(playerDeleteDiv)
                 playerDeleteDiv.innerHTML = `<form method="DELETE">
-                <button type="button" class="deletebtn">Delete</button>
+                <button type="button" class="deletebtn">Delete Player and all mazes</button>
                 </form>`
                 playerDeleteDiv.addEventListener('click', event => {
                   event.preventDefault()

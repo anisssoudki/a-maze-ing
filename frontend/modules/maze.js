@@ -72,11 +72,11 @@ class Maze {
                 {
                     
             //         //  abstract 
-                        let h2 = document.createElement("h2") 
-                        h2.textContent  = `Maze Details: id:${element.id}, level: ${element.difficulty}, timer: ${element.time},
+                        let h6 = document.createElement("h6") 
+                        h6.textContent  = `Maze Details: id:${element.id}, level: ${element.difficulty}, timer: ${element.time},
                         Score=${element.difficulty*element.time}
                         `
-                        div.appendChild(h2) 
+                        div.appendChild(h6) 
                         
             //   }
                 }))}
@@ -108,7 +108,7 @@ class Maze {
                         // console.log(currentOffset)
                         // console.log(timeRemaining)
                         // console.log( (((45*Math.PI*2)*timeRemaining/currentOffset) - (45*Math.PI*2)))
-                        circle.setAttribute('stroke-dashoffset', (((45*Math.PI*2)*timeRemaining/currentOffset) - (45*Math.PI*2)));
+                        circle.setAttribute('stroke-dashoffset', (((15*Math.PI*2)*timeRemaining/currentOffset) - (15*Math.PI*2)));
                   
                     },
                     onComplete(i) {
@@ -156,17 +156,13 @@ class Maze {
                 startgame(difficulty) 
                 {
                     
-                    if (difficulty > 15 && difficulty < 29){
-                        audio1.pause()
-                        audio2.play()
-                    } else if (difficulty >= 30)
-                    {mcHammerSuperLevel()}
-                    else {
-                        audio1.play()
-                    }
+                    if (difficulty > 15 && difficulty < 29){audio1.pause(),audio2.play()} 
+                    else if (difficulty >= 30){mcHammerSuperLevel()}
+                    else if ((difficulty > 0 && difficulty < 15)) {audio1.play()}
                     
                     document.body.appendChild(pauseBtn)
-                    
+                  
+                 
                     const { Engine, Render, Runner, World, Bodies, Body, Events } = Matter;
 
                     const cellsHorizontal = parseInt(difficulty, 10);
@@ -426,6 +422,7 @@ class Maze {
                          newLevelTimer.value = 0
                            newLevelTimer.value = parseInt(newBodyObject.time, 10)
                            console.log(newLevelTimer.value)
+                         
                           Maze.PlayGameAndSaveRecord(newBodyObject)
                       
                     })

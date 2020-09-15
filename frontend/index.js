@@ -37,3 +37,34 @@ function mcHammerSuperLevel()
   document.body.style.backgroundImage = "url(images/mc-giphy.gif)"
   
 }
+function pauseGame() {
+let pauseGame = document.createElement("button")
+document.body.appendChild(pauseGame)
+
+pauseGame.innerText="pause game"
+pauseGame.setAttribute("id","pausegame")
+pauseGame.addEventListener("click", event => {
+event.preventDefault()
+canvas = document.getElementsByTagName("canvas")[0]
+canvas.style.display="none";
+pauseGame.remove()
+unpauseGame()
+ })
+}
+
+function unpauseGame() {
+let unpause = document.createElement("button") 
+unpause.setAttribute("id","unpauseGameBtn")
+unpause.innerText="unpause"
+
+document.body.appendChild(unpause)
+
+ 
+  unpause.addEventListener("click", event => {
+    event.preventDefault()
+    canvas.style.display="block";
+    unpause.remove()
+    pauseGame()
+   
+   }) 
+}

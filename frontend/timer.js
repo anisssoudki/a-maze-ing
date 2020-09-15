@@ -28,7 +28,7 @@ class Timer {
    
          makeTimerInput = document.createElement("input")
         
-        // makeTimerInput.setAttribute("hidden","true")
+        makeTimerInput.setAttribute("hidden","true")
         document.body.appendChild(makeTimerInput)
         makeTimerInput.setAttribute("value", `${duration}`)
         makeTimerInput.setAttribute("id", `duration`)
@@ -72,7 +72,7 @@ class Timer {
      
       let selectSvg = document.getElementById("svg")
       document.getElementById("svg").style.width = window.innerWidth
-      selectSvg.innerHTML = `<circle id="circle" r="45" cx="${window.innerWidth/2}" cy="50" fill="transparent" stroke="blue" stroke-width="10" stroke-dasharray="${Math.PI*45*2}" transform="rotate(-90 ${window.innerWidth/2} 50)">`
+      selectSvg.innerHTML = `<circle id="circle" r="15" cx="${window.innerWidth/2}" cy="25" fill="transparent" stroke="blue" stroke-width="10" stroke-dasharray="${Math.PI*45*2}" transform="rotate(-90 ${window.innerWidth/2} 50)">`
      
     }
 }
