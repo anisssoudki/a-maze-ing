@@ -4,6 +4,7 @@ class Timer {
      {
         this.duration = duration 
        this.renderTimer(duration)
+      if(this.createSvg()) {this.createSvg().remove()}
       this.createSvg()
        if(callbacks) 
          {

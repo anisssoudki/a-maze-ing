@@ -201,215 +201,292 @@ class Maze {
                     
                     document.body.appendChild(pauseBtn)
                     
+                    const { Engine, Render, Runner, World, Bodies, Body, Events } = Matter;
 
-                        const { Engine, Render, Runner, World, Bodies, Body, Events} = Matter;
-                        console.log(difficulty)
-                        const cells = parseInt(difficulty, 10) // this will abstract out the 3by3 maze to generate a bigger maze
-                       function shuffle(arr) {
-                            let counter = arr.length; //decrement this in the loop because we want to start at arr.length-1
-                            while (counter > 0)  //counter
-                            {
-                            const index = Math.floor(Math.random()*counter); //random number between 0 and counter
-                            counter --; 
-                            const temp = arr[counter]; //temp array where we can get the random index positions value 
-                            arr[counter] = arr[index]; //take the array at random index and sawp it with the initial array;s index
-                            arr[index] = temp; //target index position in the loop passing and put the temp value into that
-                            }
-                            return arr; //return the array
+                    const cellsHorizontal = parseInt(difficulty, 10);
+                    const cellsVertical = parseInt(difficulty, 10);
+                    const width = window.innerWidth*.9;
+                    const height = window.innerHeight*.5;
+                    
+                    const unitLengthX = width / cellsHorizontal;
+                    const unitLengthY = height / cellsVertical;
+                    
+                    const engine = Engine.create();
+                    engine.world.gravity.y = 0;
+                    const { world } = engine;
+                    const render = Render.create({
+                      element: document.body,
+                      engine: engine,
+                      options: {
+                        wireframes: false,
+                        width,
+                        height
+                      }
+                    });
+                    Render.run(render);
+                    Runner.run(Runner.create(), engine);
+                    
+                    // Walls
+                    const walls = [
+                      Bodies.rectangle(width / 2, 0, width, 2, { isStatic: true }),
+                      Bodies.rectangle(width / 2, height, width, 2, { isStatic: true }),
+                      Bodies.rectangle(0, height / 2, 2, height, { isStatic: true }),
+                      Bodies.rectangle(width, height / 2, 2, height, { isStatic: true })
+                    ];
+                    World.add(world, walls);
+                    
+                    // Maze generation
+                    
+                    const shuffle = arr => {
+                      let counter = arr.length;
+                    
+                      while (counter > 0) {
+                        const index = Math.floor(Math.random() * counter);
+                    
+                        counter--;
+                    
+                        const temp = arr[counter];
+                        arr[counter] = arr[index];
+                        arr[index] = temp;
+                      }
+                    
+                      return arr;
+                    };
+                    
+                    const grid = Array(cellsVertical)
+                      .fill(null)
+                      .map(() => Array(cellsHorizontal).fill(false));
+                    
+                    const verticals = Array(cellsVertical)
+                      .fill(null)
+                      .map(() => Array(cellsHorizontal - 1).fill(false));
+                    
+                    const horizontals = Array(cellsVertical - 1)
+                      .fill(null)
+                      .map(() => Array(cellsHorizontal).fill(false));
+                    
+                    const startRow = Math.floor(Math.random() * cellsVertical);
+                    const startColumn = Math.floor(Math.random() * cellsHorizontal);
+                    
+                    const stepThroughCell = (row, column) => {
+                      // If i have visted the cell at [row, column], then return
+                      if (grid[row][column]) {
+                        return;
+                      }
+                    
+                      // Mark this cell as being visited
+                      grid[row][column] = true;
+                    
+                      // Assemble randomly-ordered list of neighbors
+                      const neighbors = shuffle([
+                        [row - 1, column, 'up'],
+                        [row, column + 1, 'right'],
+                        [row + 1, column, 'down'],
+                        [row, column - 1, 'left']
+                      ]);
+                      // For each neighbor....
+                      for (let neighbor of neighbors) {
+                        const [nextRow, nextColumn, direction] = neighbor;
+                    
+                        // See if that neighbor is out of bounds
+                        if (
+                          nextRow < 0 ||
+                          nextRow >= cellsVertical ||
+                          nextColumn < 0 ||
+                          nextColumn >= cellsHorizontal
+                        ) {
+                          continue;
                         }
-                        const width = window.innerWidth*.9;
-                        const height = window.innerHeight*.5;
-                        const unitLength = width / cells; //if cells = 3 and width is 600 than every cell would be 200 px in width
-                        
-                        
-                        // when we create the engine we get a world object along with it
-                        // create engine
-                        const engine = Engine.create(); 
-                        engine.world.gravity.y = 0
-                        const { world } = engine; 
-                        // create renderer-this is an additive process to document.body in other words it will not destroy any element inside of the body in the html
-                        const render = Render.create({
-                            element: document.body,
-                            engine: engine, 
-                            options: {
-                                wireframes: false,
-                                width,
-                                height
+                    
+                        // If we have visited that neighbor, continue to next neighbor
+                        if (grid[nextRow][nextColumn]) {
+                          continue;
+                        }
+                    
+                        // Remove a wall from either horizontals or verticals
+                        if (direction === 'left') {
+                          verticals[row][column - 1] = true;
+                        } else if (direction === 'right') {
+                          verticals[row][column] = true;
+                        } else if (direction === 'up') {
+                          horizontals[row - 1][column] = true;
+                        } else if (direction === 'down') {
+                          horizontals[row][column] = true;
+                        }
+                    
+                        stepThroughCell(nextRow, nextColumn);
+                      }
+                    };
+                    
+                    stepThroughCell(startRow, startColumn);
+                    
+                    horizontals.forEach((row, rowIndex) => {
+                      row.forEach((open, columnIndex) => {
+                        if (open) {
+                          return;
+                        }
+                    
+                        const wall = Bodies.rectangle(
+                          columnIndex * unitLengthX + unitLengthX / 2,
+                          rowIndex * unitLengthY + unitLengthY,
+                          unitLengthX,
+                          5,
+                          {
+                            label: 'wall',
+                            isStatic: true,
+                            render: {
+                              fillStyle: 'purple'
                             }
-                        });
-                    
-                        Render.run(render);
-                        Runner.run(Runner.create(), engine);
-                    
-                        function createWall(x,y,width,height,options) {
-                            return Bodies.rectangle(x, y, width, height, options);
-                        } 
-                        //our target
-                        const target = Bodies.rectangle(width-unitLength/2,height-unitLength/2, unitLength/3,unitLength/3, {label: 'target',isStatic:true})
-                        //ball to move to target
-                        const ball = Bodies.circle(
-                            unitLength/2, unitLength/2, unitLength*.1,{label: 'ball'}
-                        )
-                        document.addEventListener('keydown', event => {
-                            const { x, y } = ball.velocity;
-                          
-                            if (event.keyCode === 87) {
-                              Body.setVelocity(ball, { x, y: y - 1 });
-                            }
-                          
-                            if (event.keyCode === 68) {
-                              Body.setVelocity(ball, { x: x + 1, y });
-                            }
-                          
-                            if (event.keyCode === 83) {
-                              Body.setVelocity(ball, { x, y: y + 1 });
-                            }
-                          
-                            if (event.keyCode === 65) {
-                              Body.setVelocity(ball, { x: x - 1, y });
-                            }
-                          });
-                   
-                        // console.log(shape)
-                    
-                        // console.log(world)
-                        //  => we can see all the shapes we created in the console 
-                    
-                        const walls = 
-                        [
-                            createWall(width/2, 0, width, 5, {isStatic: true, render:{fillStyle:"purple"}}),
-                            createWall(width/2, height, width, 5, {isStatic: true, render:{fillStyle:"purple"}}),
-                            createWall(0, height/2, 5, height, {isStatic: true, render:{fillStyle:"purple"}}),
-                            createWall(width, height/2, 5, height, {isStatic: true, render:{fillStyle:"purple"}})
-                        ]
-                    
-                        World.add(world, walls);
-                      
-                    
-                        // for (let i=0; i < difficulty; i++){
-                        // World.add(world, shape(Math.random()*width, Math.random()*height, 40, 40, {isStatic: false})) 
-                        // }
-                    
-                        //maze generation
-                        const grid = Array(cells).fill(null).map(() => Array(cells).fill(false))
-                    
-                        const verticals = Array(cells).fill(null).map(() => Array(cells-1).fill(false))
-
-                        const horizontals = Array(cells-1).fill(null).map(()=> Array(cells).fill(false))
-
-                        // maze starting cell - this is going to be random
-                        const startRow = Math.floor(Math.random()*cells);
-                        const startColumn = Math.floor(Math.random()*cells)
-                        // see notes line 107 for the method below
-                        const stepThroughCell = (row,column) => {
-                          
-                            if (grid[row][column] === true){return;}
-                            grid[row][column] = true; 
-                            const neighbors = 
-                            shuffle( [
-                                
-                             [row - 1, column, 'up'], //up
-                             [row, column + 1, 'right'], //right
-                             [row + 1, column, 'down'], //down
-                             [row, column - 1, 'left'] //left
-                             ]); 
-                          for (let neighbor of neighbors){ //refers to every array inside of the neighbors const
-
-                        const[nextRow, nextColumn, direction] = neighbor; //destructuring nextRow and nextColumn so we have them as variables
-                        //check neighbor out of bounds
-                        if(nextRow<0||nextRow>=cells||nextColumn<0||nextColumn>=cells) {continue;} //using those variable to check conditional logic for outof bounds
-                        // neighbor visited? continue to next neighbor
-                        
-                        if(grid[nextRow][nextColumn]) {continue;} //mark the cell visited by changing the value to true
-                        // console.log(grid[nextRow][nextColumn])
-
-                        // remove a wall from either horizantals or verticals
-                        // right left for verticals because we are staing in the same row
-                        // top bottom for horizontals because we will be on the same column
-                              if(direction === 'left')
-                            {
-                                verticals[row][column - 1] = true;
-                            }  else if (direction === 'right') 
-                            {
-                                verticals[row][column] = true;
-                            }  else if (direction === 'up') 
-                            {
-                                horizontals[row -1][column] = true;
-                            }  else if (direction === 'down') 
-                            {
-                                horizontals[row][column] = true;
-                            }
-                            stepThroughCell(nextRow,nextColumn)
                           }
+                        );
+                        World.add(world, wall);
+                      });
+                    });
+                    
+                    verticals.forEach((row, rowIndex) => {
+                      row.forEach((open, columnIndex) => {
+                        if (open) {
+                          return;
+                        }
+                    
+                        const wall = Bodies.rectangle(
+                          columnIndex * unitLengthX + unitLengthX,
+                          rowIndex * unitLengthY + unitLengthY / 2,
+                          5,
+                          unitLengthY,
+                          {
+                            label: 'wall',
+                            isStatic: true,
+                            render: {
+                              fillStyle: 'purple'
                             }
-                        
-                        stepThroughCell(startRow,startColumn)
-                        horizontals.forEach
-                        ((row, rowIndex) => 
-                            {
-                                row.forEach
-                                ( (open, columnIndex) => 
-                                 {
-                                 if(open === true)
-                                   {
-                                     return;
-                                   }
-                                   const wall = Bodies.rectangle(
-                                       columnIndex*unitLength + unitLength/2,
-                                       rowIndex*unitLength + unitLength,
-                                       unitLength,
-                                       15,
-                                       {
-                                           isStatic:true,
-                                           render: {
-                                            fillStyle: 'purple'
-                                          }
-                                       }
-                                   );
-                                   World.add(world, wall)
-                                 }
-                                )
-                            } 
-                        )
-                        verticals.forEach((row, rowIndex)=>{
-                            row.forEach((open,columnIndex) =>{
-                                if (open === true) 
-                                {
-                                    return;
-                                }
-                                const wall = Bodies.rectangle(
-                                    columnIndex*unitLength + unitLength,
-                                    rowIndex*unitLength +unitLength/2,
-                                    15,
-                                    unitLength,
-                                    {
-                                        isStatic: true,
-                                        render: {
-                                            fillStyle: 'purple'
-                                          }
-                                    }
-                                )
-                                World.add(world, wall)
-                            })
-                        })
-
-                        Events.on(engine, 'collisionStart', event => {
-                            event.pairs.forEach(collision => {
-                            console.log(collision)
-                          
-                          
-                            });
+                          }
+                        );
+                        World.add(world, wall);
+                      });
+                    });
+                    
+                    // Goal
+                    
+                    const goal = Bodies.rectangle(
+                      width - unitLengthX / 2,
+                      height - unitLengthY / 2,
+                      unitLengthX * 0.7,
+                      unitLengthY * 0.7,
+                      {
+                        label: 'goal',
+                        isStatic: true,
+                        render: {
+                          fillStyle: 'green'
+                        }
+                      }
+                    );
+                    World.add(world, goal);
+                    
+                    // Ball
+                    
+                    const ballRadius = Math.min(unitLengthX, unitLengthY) / 4;
+                    const ball = Bodies.circle(unitLengthX / 2, unitLengthY / 2, ballRadius, {
+                      label: 'ball',
+                      render: {
+                        fillStyle: 'purple'
+                      }
+                    });
+                    World.add(world, ball);
+                    
+                    document.addEventListener('keydown', event => {
+                      const { x, y } = ball.velocity;
+                    
+                      if (event.keyCode === 87) {
+                        Body.setVelocity(ball, { x, y: y - 5 });
+                      }
+                    
+                      if (event.keyCode === 68) {
+                        Body.setVelocity(ball, { x: x + 5, y });
+                      }
+                    
+                      if (event.keyCode === 83) {
+                        Body.setVelocity(ball, { x, y: y + 5 });
+                      }
+                    
+                      if (event.keyCode === 65) {
+                        Body.setVelocity(ball, { x: x - 5, y });
+                      }
+                    });
+                    
+                    // Win Condition
+                    
+                    Events.on(engine, 'collisionStart', event => {
+                      event.pairs.forEach(collision => {
+                        const labels = ['ball', 'goal'];
+                    
+                        if (
+                          labels.includes(collision.bodyA.label) &&
+                          labels.includes(collision.bodyB.label)
+                        ) {
+                          world.gravity.y = 1;
+                          world.bodies.forEach(body => {
+                            if (body.label === 'wall') {
+                              Body.setStatic(body, false);
+                              const circle = document.querySelector('circle');
+                              circle.setAttribute('stroke-dashoffset', '288')
+                            }
                           });
+                        }
+                      });
+                  
+                    });
+                    const nextLevelBtn = document.createElement("button")
+                    document.body.appendChild(nextLevelBtn)
+                    nextLevelBtn.innerText="next level"
+                    console.log(nextLevelBtn)
+                    nextLevelBtn.addEventListener('click', event => {
+                        event.preventDefault()
+                            nextLevelBtn.remove()
+                            this.wipeCanvas()
+                           let newDifficulty = parseInt(this.difficulty, 10) + 1
+                        //    let newTimer = parseInt(this.time, 10) + 4
+                           let playerId = this.player_id 
+                           const newBodyObject = {}
+                           newBodyObject.difficulty = parseFloat(newDifficulty, 10).toFixed(2)
+                           let currentOffset ;
+                  
+                           let timer = new Timer(((newBodyObject.difficulty*4.00)+5.00).toFixed(2),{
+                            onStart() {
+                                window.alert("Get ready click OK to start next level")
+                            },
+                            onTick(timeRemaining) {
+                                // console.log(timeRemaining)
+                                const circle = document.querySelector('circle');
+                                currentOffset = ((newBodyObject.difficulty*4.00)+5.00).toFixed(2);
+                                // console.log(currentOffset)
+                                // console.log(timeRemaining)
+                                // console.log( (((45*Math.PI*2)*timeRemaining/currentOffset) - (45*Math.PI*2)))
+                              
+                                circle.setAttribute('stroke-dashoffset', (((45*Math.PI*2)*timeRemaining/currentOffset) - (45*Math.PI*2)));
+                                
+                            },
+                            onComplete(i) {
+                                 console.log(i)
+                            }})
+        
+                           newBodyObject.time = timer.duration 
+                           timer.onStart()
+                           timer.onTick()
+                        //  timer.onComplete()
                         
-                        World.add(world,target)
-                        World.add(world,ball)
-
-                 
-                      
+                           newBodyObject.player_id = playerId
+                           console.log(newBodyObject)
+                          Maze.PlayGameAndSaveRecord(newBodyObject)
+                    })
+                    
+                     
                         const canvas = document.querySelector('canvas')
                     canvas.style.backgroundColor = "transparent"
                 }
-        
+                wipeCanvas() {
+                    document.getElementsByTagName("canvas")[0].remove()
+                }
                 
 
 
