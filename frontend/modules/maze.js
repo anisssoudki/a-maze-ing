@@ -217,7 +217,10 @@ class Maze {
                             return arr; //return the array
                         }
                         const width = 600;
-                        const height = 600
+                        const height = 600;
+                        const unitLength = width / cells; //if cells = 3 and width is 600 than every cell would be 200 px in width
+                        
+                        
                         // when we create the engine we get a world object along with it
                         // create engine
                         const engine = Engine.create(); 
@@ -266,7 +269,9 @@ class Maze {
                         const grid = Array(cells).fill(null).map(() => Array(cells).fill(false))
                     
                         const verticals = Array(cells).fill(null).map(() => Array(cells-1).fill(false))
+
                         const horizontals = Array(cells-1).fill(null).map(()=> Array(cells).fill(false))
+
                         // maze starting cell - this is going to be random
                         const startRow = Math.floor(Math.random()*cells);
                         const startColumn = Math.floor(Math.random()*cells)
@@ -314,6 +319,47 @@ class Maze {
                             }
                         
                         stepThroughCell(startRow,startColumn)
+                        horizontals.forEach
+                        ((row, rowIndex) => 
+                            {
+                                row.forEach
+                                ( (open, columnIndex) => 
+                                 {
+                                 if(open === true)
+                                   {
+                                     return;
+                                   }
+                                   const wall = Bodies.rectangle(
+                                       columnIndex*unitLength + unitLength/2,
+                                       rowIndex*unitLength + unitLength,
+                                       unitLength,
+                                       10,
+                                       {
+                                           isStatic:true
+                                       }
+                                   );
+                                   World.add(world, wall)
+                                 }
+                                )
+                            } 
+                        )
+                        verticals.forEach((row, rowIndex)=>{
+                            row.forEach((open,columnIndex) =>{
+                                if (open === true) 
+                                {
+                                    return;
+                                }
+                                const wall = Bodies.rectangle(
+                                    columnIndex*unitLength + unitLength,
+                                    rowIndex*unitLength +unitLength/2,
+                                    10,
+                                    unitLength,
+                                    {isStatic: true}
+                                )
+                                World.add(world, wall)
+                            })
+                        })
+
                         console.log(verticals)
                         console.log(horizontals)
                       
