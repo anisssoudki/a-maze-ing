@@ -156,9 +156,7 @@ class Maze {
                 startgame(difficulty) 
                 {
                     
-                    if (difficulty > 15 && difficulty < 29){audio1.pause(),audio2.play()} 
-                    else if (difficulty >= 30){mcHammerSuperLevel()}
-                    else if ((difficulty > 0 && difficulty < 15)) {audio1.play()}
+                    playOnDifficulty(difficulty)
                     
                     document.body.appendChild(pauseBtn)
                   

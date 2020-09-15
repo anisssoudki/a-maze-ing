@@ -31,9 +31,9 @@ function wipeDom() {
 function mcHammerSuperLevel() 
 {
   
-  audio2.pause()
-  audio3.currentTime = 1
-  audio3.play()
+  audio6.pause()
+  audio20.currentTime = 1
+  audio20.play()
   document.body.style.backgroundImage = "url(images/mc-giphy.gif)"
   
 }
