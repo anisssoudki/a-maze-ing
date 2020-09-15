@@ -84,7 +84,7 @@ function listeners() {
                 if (UserId === null) {window.alert("you must sign up")}
                 let difficultyForm = document.createElement('div') 
                 difficultyForm.innerHTML = `<form>
-                <input list="level" name="level"> enter num between 5 and 20 for Maze difficulty level
+                <input list="level" name="level"> enter num between 1 and 50 for Maze difficulty level
                 <input type="submit">
               </form>`
 

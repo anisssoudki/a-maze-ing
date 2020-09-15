@@ -202,8 +202,9 @@ class Maze {
                     document.body.appendChild(pauseBtn)
                     
 
-                        const { Engine, Render, Runner, World, Bodies, MouseConstraint, Mouse} = Matter;
-                        const cells = 3 // this will abstract out the 3by3 maze to generate a bigger maze
+                        const { Engine, Render, Runner, World, Bodies, Body} = Matter;
+                        console.log(difficulty)
+                        const cells = parseInt(difficulty, 10) // this will abstract out the 3by3 maze to generate a bigger maze
                        function shuffle(arr) {
                             let counter = arr.length; //decrement this in the loop because we want to start at arr.length-1
                             while (counter > 0)  //counter
@@ -242,7 +243,30 @@ class Maze {
                         function createWall(x,y,width,height,options) {
                             return Bodies.rectangle(x, y, width, height, options);
                         } 
-                    
+                        //our target
+                        const target = Bodies.rectangle(width-unitLength/2,height-unitLength/2, unitLength/3,unitLength/3, {isStatic:true})
+                        //ball to move to target
+                        const ball = Bodies.circle(
+                            unitLength/2, unitLength/2, unitLength*.1
+                        )
+                        document.addEventListener('keydown', event => {
+                            if (event.keyCode===87) //moveup
+                            {
+
+                            }
+                            if (event.keyCode===68) //moveright
+                            {
+
+                            }
+                            if (event.keyCode===83) //movedown
+                            {
+
+                            }
+                            if (event.keyCode===65) //moveleft
+                            {
+
+                            }
+                        })
                         // console.log(shape)
                     
                         // console.log(world)
@@ -250,16 +274,13 @@ class Maze {
                     
                         const walls = 
                         [
-                            createWall(width/2, 0, width, 40, {isStatic: true, render:{fillStyle:"purple"}}),
-                            createWall(width/2, height, width, 40, {isStatic: true, render:{fillStyle:"purple"}}),
-                            createWall(0, height/2, 40, height, {isStatic: true, render:{fillStyle:"purple"}}),
-                            createWall(width, height/2, 40, height, {isStatic: true, render:{fillStyle:"purple"}})
+                            createWall(width/2, 0, width, 5, {isStatic: true, render:{fillStyle:"purple"}}),
+                            createWall(width/2, height, width, 5, {isStatic: true, render:{fillStyle:"purple"}}),
+                            createWall(0, height/2, 5, height, {isStatic: true, render:{fillStyle:"purple"}}),
+                            createWall(width, height/2, 5, height, {isStatic: true, render:{fillStyle:"purple"}})
                         ]
                     
-                        World.add(world, walls);
-                        World.add(world, MouseConstraint.create(engine,{
-                            mouse: Mouse.create(render.canvas)
-                        }))
+                      
                     
                         // for (let i=0; i < difficulty; i++){
                         // World.add(world, shape(Math.random()*width, Math.random()*height, 40, 40, {isStatic: false})) 
@@ -333,7 +354,7 @@ class Maze {
                                        columnIndex*unitLength + unitLength/2,
                                        rowIndex*unitLength + unitLength,
                                        unitLength,
-                                       10,
+                                       3,
                                        {
                                            isStatic:true
                                        }
@@ -352,7 +373,7 @@ class Maze {
                                 const wall = Bodies.rectangle(
                                     columnIndex*unitLength + unitLength,
                                     rowIndex*unitLength +unitLength/2,
-                                    10,
+                                    3,
                                     unitLength,
                                     {isStatic: true}
                                 )
@@ -360,6 +381,9 @@ class Maze {
                             })
                         })
 
+                        
+                        World.add(world,target)
+                        World.add(world,ball)
                         console.log(verticals)
                         console.log(horizontals)
                       
