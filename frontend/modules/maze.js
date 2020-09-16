@@ -380,7 +380,7 @@ class Maze {
                           labels.includes(collision.bodyB.label)
                         ) {
                           world.gravity.y = 1;
-                            
+                         console.log(collision)
                       
                           world.bodies.forEach(body => {
                             if (body.label === 'wall') {
@@ -389,19 +389,24 @@ class Maze {
                              
                             }
                           });
+                          // document.getElementsByClassName("nextLevel")[0].removeAttribute("class")
                         }
                       });
-                      engine.gravity.y = 1
+                      // engine.gravity.y = 1
+                     
                     });
+                    
                     const nextLevelBtn = document.createElement("button")
+                   
                     document.body.appendChild(nextLevelBtn)
                     nextLevelBtn.innerText="next level"
-                    console.log(nextLevelBtn)
+                    nextLevelBtn.setAttribute("class","nextLevel")
+                   
                     nextLevelBtn.addEventListener('click', event => {
                         event.preventDefault()
                         background()
                             nextLevelBtn.remove()
-                            audio3.pause()
+                           
                             this.wipeCanvas()
                            let newDifficulty = parseInt(this.difficulty, 10) + 1
                         //    let newTimer = parseInt(this.time, 10) + 4

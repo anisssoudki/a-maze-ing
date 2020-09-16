@@ -93,3 +93,9 @@ canvas {
   display: flex;    
   justify-content: flex-start
 }
+
+
+.nextLevel {
+  color: green;
+  opacity: .3;
+}

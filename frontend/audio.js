@@ -58,7 +58,7 @@ difficulty = parseInt(difficulty)
    else if (difficulty === 22){audio17.pause(),audio18.play()} 
    else if (difficulty === 23){audio18.pause(),audio19.play()} 
    else if (difficulty === 24){audio19.pause(),audio6.play()} 
-   else if (difficulty === 25){mcHammerSuperLevel() } 
+   else if (difficulty > 25){mcHammerSuperLevel() } 
 
 
 
