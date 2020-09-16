@@ -38,8 +38,8 @@ function listeners() {
                   userdivselector.remove()
                   let difficultyForm = document.createElement('div') 
                   difficultyForm.innerHTML = `<form>
-                  <input list="level" name="level"> enter a number between 5 and 25 for Maze difficulty level
-                  <input type="submit">
+                  <input hidden="true" list="level" name="level"> 
+                  <input type="submit" value="StartGame">
                 </form>`
                 let signoutbtn = document.getElementById("signout")
                 console.log(signoutbtn)
@@ -121,8 +121,8 @@ function listeners() {
                     
                       let difficultyForm = document.createElement('div') 
                       difficultyForm.innerHTML = `<form>
-                      <input list="level" name="level"> enter a number between 5 and 25 for Maze difficulty level
-                      <input type="submit">
+                      <input hidden="true" list="level" name="level"> 
+                      <input type="submit" value="StartGame">
                     </form>`
                     let signoutbtn = document.getElementById("signout")
                     console.log(signoutbtn)

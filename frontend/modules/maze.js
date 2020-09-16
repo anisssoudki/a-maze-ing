@@ -12,6 +12,7 @@ class Maze {
             this.player_id = data.player_id
             this.startgame(data.difficulty)
             this.save()
+            this.nextLevel()
         }
 
     save() 
@@ -41,14 +42,7 @@ class Maze {
                         body: JSON.stringify(bodyObject)
                     }
         }
-
-
-     
-        static renderRecordOfGamesForPlayer(input,output) 
-        {
         
-        }
-
         static fetchMazeRecordForPlayer(player_id) 
         {
             let div = document.getElementById("mazeDetails")
@@ -379,9 +373,11 @@ class Maze {
                           labels.includes(collision.bodyA.label) &&
                           labels.includes(collision.bodyB.label)
                         ) {
+                          // buggy here collision is detected before collision renderer issue
                           world.gravity.y = 1;
                          console.log(collision)
-                      
+                        document.getElementsByClassName("nextLevel")[0].style.color="yellow"
+                        document.getElementsByClassName("nextLevel")[0].style.opacity=1
                           world.bodies.forEach(body => {
                             if (body.label === 'wall') {
                               Body.setStatic(body, false);
@@ -396,40 +392,8 @@ class Maze {
                      
                     });
                     
-                    const nextLevelBtn = document.createElement("button")
-                   
-                    document.body.appendChild(nextLevelBtn)
-                    nextLevelBtn.innerText="next level"
-                    nextLevelBtn.setAttribute("class","nextLevel")
-                   
-                    nextLevelBtn.addEventListener('click', event => {
-                        event.preventDefault()
-                        background()
-                            nextLevelBtn.remove()
-                           
-                            this.wipeCanvas()
-                           let newDifficulty = parseInt(this.difficulty, 10) + 1
-                        //    let newTimer = parseInt(this.time, 10) + 4
-                           let playerId = this.player_id 
-                           const newBodyObject = {}
-                           newBodyObject.difficulty = parseFloat(newDifficulty, 10).toFixed(2)
-                          
-                       
                   
-                     
-        
-                           newBodyObject.time = (newBodyObject.difficulty*4+5)
-                           newBodyObject.player_id = playerId
-                         let newLevelTimer =  document.getElementById('duration')
-                         console.log(newBodyObject.time)
-                         newLevelTimer.value = 0
-                           newLevelTimer.value = parseInt(newBodyObject.time, 10)
-                           console.log(newLevelTimer.value)
-                         
-                          Maze.PlayGameAndSaveRecord(newBodyObject)
-                      
-                    })
-                    
+                  
                      
                         const canvas = document.querySelector('canvas')
                     canvas.style.backgroundColor = "transparent"
@@ -438,6 +402,39 @@ class Maze {
                     document.getElementsByTagName("canvas")[0].remove()
                 }
                 
-
+                nextLevel() {  const nextLevelBtn = document.createElement("button")
+                   
+                document.body.appendChild(nextLevelBtn)
+                nextLevelBtn.innerText="next level"
+                nextLevelBtn.setAttribute("class","nextLevel")
+               
+                nextLevelBtn.addEventListener('click', event => {
+                    event.preventDefault()
+                    background()
+                        nextLevelBtn.remove()
+                       
+                        this.wipeCanvas()
+                       let newDifficulty = parseInt(this.difficulty, 10) + 1
+                    //    let newTimer = parseInt(this.time, 10) + 4
+                       let playerId = this.player_id 
+                       const newBodyObject = {}
+                       newBodyObject.difficulty = parseFloat(newDifficulty, 10).toFixed(2)
+                      
+                   
+              
+                 
+    
+                       newBodyObject.time = (newBodyObject.difficulty*4+5)
+                       newBodyObject.player_id = playerId
+                     let newLevelTimer =  document.getElementById('duration')
+                     console.log(newBodyObject.time)
+                     newLevelTimer.value = 0
+                       newLevelTimer.value = parseInt(newBodyObject.time, 10)
+                       console.log(newLevelTimer.value)
+                     
+                      Maze.PlayGameAndSaveRecord(newBodyObject)
+                    
+                  
+                })}
 
 }

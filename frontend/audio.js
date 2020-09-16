@@ -20,6 +20,8 @@ const audio18 = document.getElementById("audio18")
 const audio19 = document.getElementById("audio19")
 const audio20 = document.getElementById("audio20")
 
+
+
 const audioarray = [audio1, audio2, audio3, audio4, audio5, audio6, audio7, audio8, audio9, audio10,audio11, audio12, audio13, audio14, audio15, audio16, audio17, audio18, audio19, audio20]
 
 let pauseBtn = document.createElement("button")
@@ -58,9 +60,5 @@ difficulty = parseInt(difficulty)
    else if (difficulty === 22){audio17.pause(),audio18.play()} 
    else if (difficulty === 23){audio18.pause(),audio19.play()} 
    else if (difficulty === 24){audio19.pause(),audio6.play()} 
-   else if (difficulty > 25){mcHammerSuperLevel() } 
-
-
-
-   
+   else if (difficulty > 25){mcHammerSuperLevel() }  
 }
