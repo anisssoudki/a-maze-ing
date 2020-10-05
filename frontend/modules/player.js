@@ -38,48 +38,27 @@ class Player
         
             static fetchPlayer() 
                 {
-                fetch(Player.baseUrl()+'players')
-                .then(resp => resp.json())
-                .then(playerarr => 
-                    
-                    {
-                        
-                            playerarr.forEach(function(obj)
-                            {
-                                // console.log(obj)
-                            
-                            let player = new Player(obj)
-                            
-                            
-                            }
-                            
-                    )
-                    
-                    // this.renderPlayers()     
-                    }) 
-                
-                    
+                    fetch(Player.baseUrl()+'players')
+                    .then(resp => resp.json())
+                    .then(playerarr =>{
+                                playerarr.forEach(function(obj)
+                                {
+                                let player = new Player(obj)
+                                })
+                        // this.renderPlayers()     
+                        })  
                 }
+
                 static renderPlayers() 
                 {
-                  
-                    
                    let div = document.createElement("div")
                    document.body.appendChild(div)
-
-                   
-                     Player.all.forEach(function(element)
-                                            {
-                                               
+                     Player.all.forEach(function(element){
                                                 let h2 = document.createElement("h2") 
                                                 h2.textContent  = `Player:${element.name}`
                                                 div.appendChild(h2) 
-                                                
-                                            }
-                                        )
+                                            })
                 }
-
-   
 
                   static getPlayers() {
                     return fetch(this.baseUrl() + `players`).then(res => res.json());
@@ -96,8 +75,6 @@ class Player
                     return fetch(this.baseUrl() + `players`, this.fetchConfig("POST", {name}))
                     .then(res => res.json().then(this.renderPlayers()));
                 }
-
-                static updatePlayer(){}
 
                 static deletePlayerAndAllMazeRecords(playerId,element)
                 {

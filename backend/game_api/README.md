@@ -6,19 +6,20 @@ application up and running.
 Things you may want to cover:
 
 * Ruby version
-
+ruby '2.6.1'
 * System dependencies
-
+    cors gem
+    rails 
 * Configuration
 
 * Database creation
-
+rake db:migrate
 * Database initialization
-
+rake db:migrate
 * How to run the test suite
 
 * Services (job queues, cache servers, search engines, etc.)
 
 * Deployment instructions
-
+ if needed to be deployed switch to postgress database currently using sqlite
 * ...

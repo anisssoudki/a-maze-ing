@@ -8,11 +8,11 @@ class Maze {
         {
            
             this.difficulty = data.difficulty;
-            this.time = data.time 
-            this.player_id = data.player_id
-            this.startgame(data.difficulty)
-            this.save()
-            this.nextLevel()
+            this.time = data.time; 
+            this.player_id = data.player_id;
+            this.startgame(data.difficulty);
+            this.save();
+            this.nextLevel();
         }
 
     save() 
@@ -47,9 +47,9 @@ class Maze {
         {
             let div = document.getElementById("mazeDetails")
             if (div === null) {
-                div = document.createElement("div")
-                div.setAttribute("id","mazeDetails")
-                document.body.appendChild(div)
+                div = document.createElement("div");
+                div.setAttribute("id","mazeDetails");
+                document.body.appendChild(div);
             }
             else {
                 div.innerHTML=""

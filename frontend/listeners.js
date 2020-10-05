@@ -1,15 +1,13 @@
-function showMenu(players, input) {
+function showMenu(players, input) 
+{
   for (player of players) 
   {
         if (player.name.toLowerCase() === input.toLowerCase())
       signInDiv.innerHTML = `<div class="signOutBanner">welcome  ${player.name}<button id="signout">signout</button></div>
       <div id="${player.name}">${player.id}</div>
       `
-      
   }
 
-
- 
   let ShowMazeReocrds = document.createElement('button')
   let HideMazeReocrds = document.createElement('button')
   let userdivselector = document.getElementById(`${input.toLowerCase()}`) 
@@ -21,14 +19,17 @@ function showMenu(players, input) {
   <input hidden="true" list="level" name="level"> 
   <input id="StartGameSubmitBtn" type="submit" value="StartGame">
 </form>`
+
 let signoutbtn = document.getElementById("signout")
 console.log(signoutbtn)
-signoutbtn.addEventListener('click', event => {
-  event.preventDefault()
-  wipeDom()
+signoutbtn.addEventListener('click', event => 
+  {
+    event.preventDefault()
+    wipeDom()
   
    
   })
+
   difficultyForm.setAttribute("id",`${UserId}`)
   ShowMazeReocrds.setAttribute("id", `${UserId}`)
 
@@ -41,31 +42,35 @@ signoutbtn.addEventListener('click', event => {
    
   difficultyForm.addEventListener('submit', event => {Maze.getBodyObject(event),  pauseGame()})
  
-  ShowMazeReocrds.addEventListener('click', event => {
+  ShowMazeReocrds.addEventListener('click', event => 
+  {
     event.preventDefault()
-  Maze.fetchMazeRecordForPlayer(UserId)
+    Maze.fetchMazeRecordForPlayer(UserId)
   
 
   })
-  HideMazeReocrds.addEventListener('click', event => {
+
+  HideMazeReocrds.addEventListener('click', event => 
+  {
     event.preventDefault()
-let records = document.getElementById("mazeDetails")
-records.remove()
+    let records = document.getElementById("mazeDetails")
+    records.remove()
+      })
+
+    let playerDeleteDiv = document.createElement('div')
+    document.body.appendChild(playerDeleteDiv)
+    playerDeleteDiv.innerHTML = `<form method="DELETE">
+    <button id="delbtn" type="button" class="deletebtn">Delete</button>
+    </form>`
+    playerDeleteDiv.addEventListener('click', event => {
+    event.preventDefault()
+    parsedUserId = parseInt(UserId, 10)
+
+
+    Player.deletePlayerAndAllMazeRecords(parsedUserId, signInDiv)
+    wipeDom()
+
   })
-let playerDeleteDiv = document.createElement('div')
-document.body.appendChild(playerDeleteDiv)
-playerDeleteDiv.innerHTML = `<form method="DELETE">
-<button id="delbtn" type="button" class="deletebtn">Delete</button>
-</form>`
-playerDeleteDiv.addEventListener('click', event => {
-event.preventDefault()
-parsedUserId = parseInt(UserId, 10)
-
-
-Player.deletePlayerAndAllMazeRecords(parsedUserId, signInDiv)
-wipeDom()
-
-})
 }
 
 function listeners() {    
@@ -80,41 +85,29 @@ function listeners() {
         //  we are gonna create the player 
         Player.createPlayer(input)
         // chain .then here
-        
-      
         .then(player => {
          if (player.errors !== undefined) {return window.alert(player.errors)}
           signInDiv.innerHTML = `<div class="signOutBanner">signed in as ${player.name}<button id="signout">signout</button></div>
           <div id="userDiv" data-id="${player.id}"></div>`
           Player.getPlayers(input)
-          .then(players =>
-             {         
-              showMenu(players, input)
-              }
-              
-            )
-               
-           
+          .then(players =>{         
+                  showMenu(players, input)
+              })
         })
+
         .catch(error => console.log(error))
         }
         
         else {
-              // we are gonna find the player 
-              Player.getPlayers(input.toLowerCase())
-              .then(players =>
-                {         
-                  showMenu(players, input)
-                 }
-                 
-               )
-               
-               
-              
+                // we are gonna find the player 
+                Player.getPlayers(input.toLowerCase())
+                .then(players =>
+                  {         
+                    showMenu(players, input)
+                  })
              }
     })
     
-  
   }
   
   

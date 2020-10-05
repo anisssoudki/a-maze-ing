@@ -3,23 +3,24 @@ class Timer {
     constructor(duration, callbacks)
      {
         this.duration = duration 
-       this.renderTimer(duration)
-      if(this.createSvg()) {this.createSvg().remove()}
-      this.createSvg()
-      this.save()
-       if(callbacks) 
+        this.renderTimer(duration)
+        if(this.createSvg()) {this.createSvg().remove()}
+        this.createSvg()
+        this.save()
+        if(callbacks) 
          {
           this.onStart = callbacks.onStart;
           this.onTick = callbacks.onTick;
           this.onComplete = callbacks.onComplete;
-         }
-      
+         } 
      }
+
      save() 
      {
          Timer.all.push(this);
          
      }
+
      renderTimer(duration)
      {
       let makeTimerInput 
@@ -35,16 +36,15 @@ class Timer {
         console.log(makeTimerInput.value)
          setInterval(this.tick,50);
      }
-     pause = () => {clearInterval(setInterval(this.tick, 50))}
+
+    pause = () => {clearInterval(setInterval(this.tick, 50))}
+
     tick = () => 
     {
-      let selectTimer = document.getElementById('duration')
+     let selectTimer = document.getElementById('duration')
      let timeRemaining = this.timeRemaining;
      if(timeRemaining <=0) {
                               return this.pause()
-                              
-                            
-                           
                            }
      else {
        
@@ -52,18 +52,20 @@ class Timer {
             if(this.onTick){this.onTick(this.timeRemaining)}
            
           }
-   
-     
     }
   
 
-    get timeRemaining() {
-      
+    get timeRemaining() 
+
+    {
       let selectTimer = document.getElementById('duration')
       let value = parseFloat(selectTimer.value, 10).toFixed(2) 
-     return value
+      return value
     }
-    set timeRemaining(time) {
+
+    set timeRemaining(time) 
+    
+    {
       this.durationInput.value = time;
     }
    

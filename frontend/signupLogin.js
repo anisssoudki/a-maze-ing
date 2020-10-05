@@ -36,15 +36,13 @@ function renderForm() {
     });
   
     signUpButton.addEventListener('click', event => {
-        event.preventDefault()
+      event.preventDefault()
       let signInDiv = event.target.parentElement;
       signInDiv.innerHTML = `<form id="signUpForm"> 
         <label> NewPlayerName </label>
         <input name="name" type="text" placeholder="NewPlayerName">
         <button id="signUpBtn" type="submit">Submit</button>
       </form>`;
-  
-  
   });
   
 }
