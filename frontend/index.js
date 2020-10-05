@@ -67,5 +67,6 @@ document.body.appendChild(unpause)
     pauseGame()
    
    }) 
+   
 }
 
