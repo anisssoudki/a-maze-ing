@@ -79,22 +79,7 @@ class Player
                                         )
                 }
 
-                // static playerObjCreation(event)
-                // {
-                //     event.preventDefault() 
-                //     const form = event.target.elements 
-                //     const playerName = form.playerName.value
-                //     const PlayerObj =  Player.findPlayer(playerName)
-                //     const configBodyObj = {}
-                //     configBodyObj.player = PlayerObj
-                //     createPlayer(configBodyObj)
-                // }
-
-                static findPlayer(attr, attrVal) 
-                  {
-                    return (this.all.find(obj => {return obj[attr] === attrVal}))
-                  }
-
+   
 
                   static getPlayers() {
                     return fetch(this.baseUrl() + `players`).then(res => res.json());
