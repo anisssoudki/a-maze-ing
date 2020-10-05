@@ -1,4 +1,5 @@
 function renderForm() {
+  
   const loginForm = document.createElement('form')
   loginForm.setAttribute("id","loginForm")
   

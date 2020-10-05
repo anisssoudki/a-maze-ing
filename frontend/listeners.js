@@ -39,7 +39,7 @@ function listeners() {
                   let difficultyForm = document.createElement('div') 
                   difficultyForm.innerHTML = `<form>
                   <input hidden="true" list="level" name="level"> 
-                  <input type="submit" value="StartGame">
+                  <input id="StartGameSubmitBtn" type="submit" value="StartGame">
                 </form>`
                 let signoutbtn = document.getElementById("signout")
                 console.log(signoutbtn)
@@ -122,7 +122,7 @@ function listeners() {
                       let difficultyForm = document.createElement('div') 
                       difficultyForm.innerHTML = `<form>
                       <input hidden="true" list="level" name="level"> 
-                      <input type="submit" value="StartGame">
+                      <input id="StartGameSubmitBtn" type="submit" value="StartGame">
                     </form>`
                     let signoutbtn = document.getElementById("signout")
                     console.log(signoutbtn)

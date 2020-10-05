@@ -99,3 +99,23 @@ canvas {
   color: green;
   opacity: .1;
 }
+#StartGameSubmitBtn {
+  color: green;
+  opacity: .8;
+background-color: yellow;
+  animation-name: spin;
+  animation-duration: 3000ms;
+  animation-iteration-count: infinite;
+  animation-timing-function: cubic-bezier(0.165, 0.84, 0.44, 1); 
+} 
+
+@keyframes spin {
+  from {
+   
+      transform:rotateY(0deg);
+  }
+  to {
+      
+      transform:rotateY(360deg);
+  }
+}

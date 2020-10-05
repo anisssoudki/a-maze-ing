@@ -42,7 +42,7 @@ class Maze {
                         body: JSON.stringify(bodyObject)
                     }
         }
-        
+
         static fetchMazeRecordForPlayer(player_id) 
         {
             let div = document.getElementById("mazeDetails")
@@ -325,9 +325,11 @@ class Maze {
                     const goal = Bodies.circle( width - unitLengthX / 2,
                         height - unitLengthY / 2,  goalRadius, {
                         label: 'goal',
+                        isStatic: true,
+                        mass: 1000,
                         render: {
-                            isStatic: true,
-                          fillStyle: 'green'
+                            
+                          fillStyle: 'yellow'
                         }
                       });
                     World.add(world, goal);
@@ -368,30 +370,36 @@ class Maze {
                     Events.on(engine, 'collisionStart', event => {
                       event.pairs.forEach(collision => {
                         const labels = ['ball', 'goal'];
+                 
                     
                         if (
                           labels.includes(collision.bodyA.label) &&
-                          labels.includes(collision.bodyB.label)
+                          labels.includes(collision.bodyB.label)&&
+                          (collision.collision.collided === true)
+                          
                         ) {
+                         
+                          
                           // buggy here collision is detected before collision renderer issue
                           world.gravity.y = 1;
-                         console.log(collision)
-                        document.getElementsByClassName("nextLevel")[0].style.color="yellow"
-                        document.getElementsByClassName("nextLevel")[0].style.opacity=1
+                          // console.log(engine.world.bodies[bodies.length-1].isStatic)
+                        //  console.log(collision)
+                        
                           world.bodies.forEach(body => {
                             if (body.label === 'wall') {
                               Body.setStatic(body, false);
-                             
-                             
-                            }
-                          });
-                          // document.getElementsByClassName("nextLevel")[0].removeAttribute("class")
+                             if(  world.gravity.y = 1) {
+                              document.getElementsByClassName("nextLevel")[0].style.color="yellow";
+                              document.getElementsByClassName("nextLevel")[0].style.opacity=1;
+                              world.gravity.y = 1;
+                              
+                            }}
+                          });  
                         }
                       });
                       // engine.gravity.y = 1
-                     
                     });
-                    
+                  
                   
                   
                      
@@ -434,7 +442,7 @@ class Maze {
                      
                       Maze.PlayGameAndSaveRecord(newBodyObject)
                     
-                  
+                    
                 })}
 
 }
