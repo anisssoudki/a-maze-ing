@@ -273,7 +273,7 @@ class Maze {
                     };
                     
                     stepThroughCell(startRow, startColumn);
-                    
+                    //draw horizontal wall
                     horizontals.forEach((row, rowIndex) => {
                       row.forEach((open, columnIndex) => {
                         if (open) {
@@ -296,7 +296,7 @@ class Maze {
                         World.add(world, wall);
                       });
                     });
-                    
+                        //draw vertical wall
                     verticals.forEach((row, rowIndex) => {
                       row.forEach((open, columnIndex) => {
                         if (open) {
@@ -446,3 +446,11 @@ class Maze {
                 })}
 
 }
+
+let newButton = document.createElement("button");
+newButton.innerText = "newbutton"
+document.body.appendChild(newButton)
+
+newButton.addEventListener("click",function() {
+  document.body.style.backgroundColor = "pink"
+} )
